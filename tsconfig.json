@@ -1,0 +1,69 @@
+{
+  "compilerOptions": {
+    "baseUrl": "./src",
+    "paths": {
+      "@adminModals/*": [
+        "adminModals/*"
+      ],
+      "@categories/*": [
+        "categories/*"
+      ],
+      "@customerModals/*": [
+        "customerModals/*"
+      ],
+      "@form/*": [
+        "form/*"
+      ],
+      "@header/*": [
+        "header/*"
+      ],
+      "@orders/*": [
+        "orders/*"
+      ],
+      "@layout/*": [
+        "layout/*"
+      ],
+      "@materials/*": [
+        "materials/*"
+      ],
+      "@pages/*": [
+        "Pages/*"
+      ],
+      "@productRatings/*": [
+        "productRatings/*"
+      ],
+      "@products/*": [
+        "products/*"
+      ],
+      "@support/*": [
+        "support/*"
+      ],
+      "@wishlist/*": [
+        "wishlist/*"
+      ],
+    },
+    "target": "es5",
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
+    "allowJs": true,
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "noFallthroughCasesInSwitch": true,
+    "module": "esnext",
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noEmit": true,
+    "jsx": "react-jsx",
+    "types": ["jest", "node"],
+  },
+  "include": [
+    "src"
+  ]
+}

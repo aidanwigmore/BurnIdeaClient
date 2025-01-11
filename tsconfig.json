@@ -5,8 +5,8 @@
       "@adminModals/*": [
         "adminModals/*"
       ],
-      "@categories/*": [
-        "categories/*"
+      "@category/*": [
+        "category/*"
       ],
       "@customerModals/*": [
         "customerModals/*"
@@ -17,11 +17,11 @@
       "@header/*": [
         "header/*"
       ],
-      "@orders/*": [
-        "orders/*"
-      ],
       "@layout/*": [
         "layout/*"
+      ],
+      "@adminLayout/*": [
+        "adminLayout/*"
       ],
       "@materials/*": [
         "materials/*"
@@ -29,17 +29,11 @@
       "@pages/*": [
         "Pages/*"
       ],
-      "@productRatings/*": [
-        "productRatings/*"
+      "@idea/*": [
+        "idea/*"
       ],
-      "@products/*": [
-        "products/*"
-      ],
-      "@support/*": [
-        "support/*"
-      ],
-      "@wishlist/*": [
-        "wishlist/*"
+      "@content/*": [
+        "content/*"
       ],
     },
     "target": "es5",

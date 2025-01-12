@@ -24,12 +24,11 @@ function AdminHeader({ modalOverLayOpen, setModalOverLayOpen }: AdminHeaderProps
   return (
     <Box
       sx={{
-        backgroundColor: customTheme.palette.secondary.main,
-        width: '100%',
         height: '100px',
         display: 'flex',
         alignItems: 'center',
         borderRadius: '15px',
+        justifyContent: 'space-between',
         boxShadow: '0 4px 8px 0 rgba(0,0,0,0.2)',
       }}>
       <Button
@@ -43,7 +42,11 @@ function AdminHeader({ modalOverLayOpen, setModalOverLayOpen }: AdminHeaderProps
           borderRadius: '15px',
         }}
       >
-        <Title title={"BurnIdea Admin"} />
+        <Box sx={{display: 'inline-flex', flexDirection: 'row', justifyContent: 'center', alignItems: 'center'}}>
+          <Title title={"Admin"} />
+          <img style={{paddingBottom: '8%'}} src='/burn.gif' />
+        </Box>
+
       </Button>
     </Box>
   );

@@ -33,6 +33,7 @@
     "create-create-app": "^7.3.0",
     "customize-cra": "^1.0.0",
     "dotenv-webpack": "^8.1.0",
+    "gifler": "^0.1.0",
     "react": "^19.0.0",
     "react-app-rewired": "^2.2.1",
     "react-dom": "^19.0.0",

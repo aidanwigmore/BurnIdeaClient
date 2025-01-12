@@ -5,6 +5,7 @@ interface Idea {
     ideaDescription: string;
     ideaDifficulty: number;
     image?: string;
+    dateCreated?: Date;
 }
 
 export default Idea;

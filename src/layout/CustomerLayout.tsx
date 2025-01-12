@@ -4,7 +4,6 @@ import { useNavigate } from 'react-router-dom';
 import Box from '@mui/material/Box';
 
 import Body from '@layout/Body';
-import Banner from '@layout/Banner';
 import CustomerAccountModal from '@customerModals/CustomerAccountModal';
 import CustomerModalControl from '@customerModals/CustomerModalControl';
 import CustomerLoginModal from '@customerModals/CustomerLoginModal';
@@ -143,12 +142,6 @@ function CustomerLayout({
                             handleNavigateAboutUs={() => handleNavigation('/about-us')}
                         />
                     </Box>
-                    {bannerDisplayed && (
-                        <Box sx={{ gridArea: 'banner' }}>
-                            <Banner onClick={handleCloseBanner} />
-                        </Box>
-                    )
-                    }
                     <Box sx={{ gridArea: 'content' }}>
                         {children}
                     </Box>

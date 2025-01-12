@@ -44,6 +44,7 @@ function IdeaForm({ idea, handleResetIdea, handleCancel, setIdeas }: IdeaFormPro
         ideaDifficulty: idea?.ideaDifficulty || 0,
         visible: idea?.visible || true,
         image: idea?.image || '',
+        dateCreated: idea?.dateCreated || new Date(),
     });
 
     useEffect(() => {

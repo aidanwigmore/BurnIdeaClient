@@ -36,21 +36,6 @@ function Header({ modalOverLayOpen, setModalOverLayOpen }: HeaderProps) {
         boxShadow: '0 4px 8px 0 rgba(0,0,0,0.2)',
       }}>
       <Button
-        onClick={handleNavigateTeaBank}
-        sx={{
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-          minWidth: '10%',
-          maxWidth: '20%',
-          backgroundColor: customTheme.palette.success.main,
-          height: '100%',
-          borderRadius: '15px',
-        }}
-      >
-        TeaBank.com
-      </Button>
-      <Button
         onClick={handleClick}
         sx={{
           display: 'flex',
@@ -61,7 +46,11 @@ function Header({ modalOverLayOpen, setModalOverLayOpen }: HeaderProps) {
           borderRadius: '15px',
         }}
       >
-        <Title title={"BurnIdea"} />
+        <Box sx={{display: 'inline-flex', flexDirection: 'row', justifyContent: 'center', alignItems: 'center'}}>
+          <Title title={"Idea"} />
+          <img style={{paddingBottom: '8%'}} src='/burn.gif' />
+        </Box>
+
       </Button>
     </Box>
   );

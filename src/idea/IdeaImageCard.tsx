@@ -64,6 +64,11 @@ const IdeaImageCardButton = React.forwardRef<HTMLButtonElement, IdeaImageCardPro
 });
 
 function IdeaImageCard({ idea, category, renderDescription }: IdeaImageCardProps) {
+    const formatDate = (dateString: string) => {
+        const date = new Date(dateString);
+        return date.toLocaleString(); // This will format the date according to the client's locale
+      };
+    
     const navigate = useNavigate();
 
     const [token, setToken] = useState<string | null>(null);
@@ -127,7 +132,7 @@ function IdeaImageCard({ idea, category, renderDescription }: IdeaImageCardProps
                         sx={{
                             color: customTheme.palette.custom.black,
                             fontFamily: 'CustomCategoryFont, sans-serif',
-                            fontSize: '20px',
+                            fontSize: '25px',
                         }}
                     >
                         {idea?.name}
@@ -141,12 +146,30 @@ function IdeaImageCard({ idea, category, renderDescription }: IdeaImageCardProps
                     >
                         Difficulty: {idea?.ideaDifficulty}
                     </Typography>
+                    <Typography
+                        sx={{
+                            color: customTheme.palette.custom.black,
+                            fontFamily: 'CustomCategoryFont, sans-serif',
+                            fontSize: '25px',
+                        }}
+                    >
+                        Created: { idea && idea.dateCreated && formatDate(idea.dateCreated.toString()) } minutes
+                    </Typography>
                 </Box>
                 <Tooltip title="Navigate to Idea page?" arrow>
                     <IdeaImageCardButton handleClick={handleClick} idea={idea} category={category} />
                 </Tooltip>
                 {renderDescription && renderDescription === true && (
-                    <Box>
+                    <Box
+                        sx={{
+                            display: 'inline-flex',
+                            flexDirection: 'row',
+                            width: '99%',
+                            justifyContent: 'space-around',
+                            alignItems: 'center',
+                            padding: '12px',
+                        }}
+                    >
                         <Typography
                             sx={{
                                 color: customTheme.palette.custom.black,

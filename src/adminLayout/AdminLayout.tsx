@@ -5,8 +5,6 @@ import { useNavigate } from 'react-router-dom';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 
-// import AdminCustomersModal from '@adminModals/AdminCustomersModal';
-import AdminBanner from '@adminLayout/AdminBanner';
 import AdminCategoryModal from '@adminModals/AdminCategoryModal';
 import AdminHeader from '@header/AdminHeader';
 import AdminVerticalAppBar from '@adminLayout/AdminVerticalAppBar';
@@ -191,7 +189,12 @@ function AdminLayout({
                     gap: '12px',
                 }}
             >
-                <Box sx={{ gridArea: 'header' }}>
+                <Box sx={{
+                        gridArea: 'header',
+                        backgroundColor: customTheme.palette.secondary.main,
+                        borderRadius: '15px',
+                        boxShadow: '0 4px 8px 0 rgba(0,0,0,0.2)',
+                    }}>
                     <AdminHeader modalOverLayOpen={modalOverLayOpen} setModalOverLayOpen={handleModalOverLayOpen} />
                 </Box>
                 <Box sx={{ gridArea: 'vertSideBar' }}>
@@ -208,12 +211,6 @@ function AdminLayout({
                         handleNavigateFAQ={() => handleNavigation('/faq')}
                     />
                 </Box>
-                {bannerDisplayed && (
-                    <Box sx={{ gridArea: 'banner' }}>
-                        <AdminBanner onClick={handleCloseBanner} />
-                    </Box>
-                )
-                }
                 <Box sx={{ gridArea: 'content' }}>
                     {children}
                 </Box>

@@ -136,7 +136,7 @@ function AdminIdeaModal({ idea, ideas, setIdea, setIdeas, handleResetIdea, handl
                     </Box>
                 </>
             ) : (
-                <Button sx={{ marginLeft: '12px' }} color="success" variant="contained" onClick={() => setNewIdea({ name: '', visible: false, ideaDescription: '', ideaDifficulty: 0 })}>
+                <Button sx={{ marginLeft: '12px' }} color="success" variant="contained" onClick={() => setNewIdea({ name: '', visible: false, ideaDescription: '', ideaDifficulty: 0, dateCreated: new Date() })}>
                     Create Idea
                 </Button>
             )}

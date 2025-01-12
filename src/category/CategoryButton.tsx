@@ -40,7 +40,7 @@ const CategoryButton = React.forwardRef<HTMLButtonElement, CategoryButtonProps>(
                 backgroundColor: category?.color ?? customTheme.palette.success.main,
                 fontSize: fontSize ? fontSize : '150%',
             }}
-            onClick={handleClick}
+            onClick={() => {}}
         >
             {text}
         </Button>

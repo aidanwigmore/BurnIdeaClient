@@ -9,7 +9,6 @@ const Footer: React.FC = () => {
         backgroundColor: 'success.main',
         color: 'white',
         padding: '16px 0',
-        position: 'fixed',
         bottom: 0,
       }}
     >

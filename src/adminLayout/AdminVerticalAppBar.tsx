@@ -19,10 +19,14 @@ import MenuBookIcon from '@mui/icons-material/MenuBook';
 import ShoppingCart from '@mui/icons-material/ShoppingCart';
 import Snackbar from '@mui/material/Snackbar';
 import Star from '@mui/icons-material/Star';
+import Question from '@mui/icons-material/QuestionAnswer';
 
 import Customer from '../types/Customer';
 
+import customTheme from '../theme';
+
 interface AdminVerticalAppBarProps {
+  setFAQModalOpen: () => void;
   setLoginModalOpen: () => void;
   setCustomersModalOpen: () => void;
   setCategoryModalOpen: () => void;
@@ -30,6 +34,7 @@ interface AdminVerticalAppBarProps {
 }
 
 function AdminVerticalAppBar({
+  setFAQModalOpen,
   setLoginModalOpen,
   setCustomersModalOpen,
   setCategoryModalOpen,
@@ -49,6 +54,10 @@ function AdminVerticalAppBar({
   const handleSnackbarClose = () => {
     setSnackbarOpen(false);
   };
+
+  const handleFAQModalOpen = useCallback(() => {
+    setFAQModalOpen();
+  }, [setFAQModalOpen]);
 
   const handleLoginModalOpen = useCallback(() => {
     setLoginModalOpen();
@@ -132,6 +141,10 @@ function AdminVerticalAppBar({
             <Category sx={{ width: '36px', height: '36px' }} />
             Categories
           </Button>
+          <Button sx={{ color: 'white', fontSize: '12px', display: 'flex', flexDirection: 'column', paddingBottom: '10px', marginLeft: 'auto', marginRight: 'auto' }} onClick={handleFAQModalOpen}>
+            <Question sx={{ width: '36px', height: '36px' }} />
+            FAQ
+          </Button>
         </>
       );
     } else {
@@ -155,7 +168,7 @@ function AdminVerticalAppBar({
     <Box sx={{ flexDirection: 'column', flexGrow: 1, height: '100%' }}>
       <AppBar
         sx={{
-          background: 'linear-gradient(180deg, #000000 0%, #687258 48%, #687258 100vw)',
+          background: `linear-gradient(180deg, #000000 0%, ${customTheme.palette.secondary.main} 48%, ${customTheme.palette.secondary.main} 100vw)`,
           height: '100%',
           width: '100px',
           borderRadius: '15px',

@@ -9,6 +9,7 @@ import CustomerAccountModal from '@customerModals/CustomerAccountModal';
 import CustomerModalControl from '@customerModals/CustomerModalControl';
 import CustomerLoginModal from '@customerModals/CustomerLoginModal';
 import CustomerRegisterModal from '@customerModals/CustomerRegisterModal';
+import Footer from '@layout/Footer';
 import Header from '@header/Header';
 import HorizontalAppBar from '@layout/HorizontalAppBar';
 import VerticalAppBar from '@layout/VerticalAppBar';
@@ -108,13 +109,15 @@ function CustomerLayout({
                         "vertSideBar horiSideBar horiSideBar"
                         "vertSideBar banner banner"
                         "vertSideBar content content"
+                        "footer footer footer" 
                         ` : `
                         "header header header"
                         "vertSideBar horiSideBar horiSideBar"
                         "vertSideBar content content"
+                        "footer footer footer"
                         `,
                         gridTemplateColumns: '100px 1fr 1fr',
-                        gridTemplateRows: '1fr 1fr 1fr 1fr 1fr',
+                        gridTemplateRows: '1fr 1fr 1fr 1fr 1fr 1fr',
                         height: '100vh',
                         gap: '12px',
                     }}
@@ -148,6 +151,9 @@ function CustomerLayout({
                     }
                     <Box sx={{ gridArea: 'content' }}>
                         {children}
+                    </Box>
+                    <Box sx={{ gridArea: 'footer' }}>
+                        <Footer />
                     </Box>
                 </Box>
             </Body>

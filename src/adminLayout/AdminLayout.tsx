@@ -14,11 +14,13 @@ import AdminHorizontalAppBar from '@adminLayout/AdminHorizontalAppBar';
 import AdminModalControl from '@customerModals/ModalOverLay';
 import AdminIdeaModal from '@adminModals/AdminIdeaModal';
 import AdminLoginModal from '@adminModals/AdminLoginModal';
+import FaqModal from '@adminModals/FaqModal';
 import Body from '@layout/Body';
 
 import Category from '../types/Category';
 import Customer from '../types/Customer';
 import Idea from '../types/Idea';
+import FAQ from '../types/FAQ';
 import customTheme from '../theme';
 
 interface AdminLayoutProps {
@@ -26,28 +28,35 @@ interface AdminLayoutProps {
 
     category: Category | null;
     idea: Idea | null;
+    faq: FAQ | null;
 
     categories: Category[] | null;
     customers: Customer[] | null;
     ideas: Idea[] | null;
+    faqs: FAQ[] | null;
 
     setCategories: (categories: Category[]) => void;
     setCategory: (category: Category) => void;
     setIdea: (idea: Idea) => void;
     setIdeas: (ideas: Idea[]) => void;
+    setFaq: (faq: FAQ) => void;
+    setFaqs: (faqs: FAQ[]) => void;
 
+    faqModalOpen: boolean;
     adminLoginModalOpen: boolean;
     categoryModalOpen: boolean;
     ideaModalOpen: boolean;
     modalOverLayOpen: boolean;
     customersModalOpen: boolean;
 
+    handleFaqModalOpen: () => void;
     handleAdminLoginModalOpen: () => void;
     handleCategoryModalOpen: () => void;
     handleCustomersModalOpen: () => void;
     handleModalOverLayOpen: () => void;
     handleIdeaModalOpen: () => void;
     handleResetCategory: () => void;
+    handleResetFaq: () => void;
     handleResetIdea: () => void;
 }
 
@@ -56,27 +65,34 @@ function AdminLayout({
 
     category,
     idea,
+    faq,
 
     categories,
     customers,
     ideas,
+    faqs,
 
+    setFaq,
     setIdea,
     setCategory,
     setCategories,
     setIdeas,
+    setFaqs,
 
+    faqModalOpen,
     adminLoginModalOpen,
     categoryModalOpen,
     customersModalOpen,
     modalOverLayOpen,
     ideaModalOpen,
 
+    handleFaqModalOpen,
     handleAdminLoginModalOpen,
     handleCategoryModalOpen,
     handleCustomersModalOpen,
     handleResetIdea,
     handleResetCategory,
+    handleResetFaq,
     handleModalOverLayOpen,
     handleIdeaModalOpen,
 }: AdminLayoutProps) {
@@ -122,11 +138,23 @@ function AdminLayout({
                     handleNavigation={handleAdminLoginModalOpen}
                 />
             )
+        } else if (faqModalOpen) {
+            return (
+                <FaqModal
+                    faq={faq ?? null}
+                    faqs={faqs ?? null}
+                    setFaqs={() => setFaqs}
+                    setFaq={() => setFaq}
+                    handleResetFaq={handleResetFaq}
+                    handleNavigation={handleFaqModalOpen}
+                />
+            )
         }
     }, [
         customers, ideas, idea, category, categories,
         handleResetIdea, handleResetCategory, setCategory,
-        setCategories, setIdeas, setIdea,
+        setCategories, setIdeas, setIdea, setFaq, faq, 
+        faqModalOpen,
         customersModalOpen,
         ideaModalOpen,
         categoryModalOpen, adminLoginModalOpen,
@@ -168,6 +196,7 @@ function AdminLayout({
                 </Box>
                 <Box sx={{ gridArea: 'vertSideBar' }}>
                     <AdminVerticalAppBar
+                        setFAQModalOpen={handleFaqModalOpen}
                         setLoginModalOpen={handleAdminLoginModalOpen}
                         setCustomersModalOpen={handleCustomersModalOpen}
                         setCategoryModalOpen={handleCategoryModalOpen}

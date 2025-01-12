@@ -23,7 +23,7 @@ function AdminHorizontalAppBar({ handleNavigateFAQ }: AdminHorizontalAppBarProps
             <Box sx={{ flexGrow: 1 }}>
                 <AppBar
                     sx={{
-                        background: 'linear-gradient(90deg, #000000 0%, #687258 48%, #687258 100vw)',
+                        background: `linear-gradient(90deg, #000000 0%, ${customTheme.palette.secondary.main} 48%, ${customTheme.palette.secondary.main} 100vw)`,
                         borderRadius: '15px',
                         width: '100%',
                         display: 'flex',

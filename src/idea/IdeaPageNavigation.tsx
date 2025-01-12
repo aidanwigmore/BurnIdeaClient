@@ -29,7 +29,6 @@ function IdeaPageNavigation({ idea, categories, ideas }: IdeaPageNavigationProps
             <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
                 <Tabs value={option} onChange={setSelectedOption} aria-label="basic tabs example">
                     <Tab label="Details" value={1} />
-                    <Tab label="Ratings" value={2} />
                 </Tabs>
             </Box>
 

@@ -21,12 +21,12 @@ const customTheme = createTheme({
       white: '#FFFFFF',
       black: '#1D192B',
     },
-    primary: {main: '#F4EBE2'},
-    secondary: {main:'#687258'},
+    primary: {main: '#f4ebe2'},
+    secondary: {main:'#3D2C2E'},
     error: {main:'#8E412E'},
-    warning: {main:'#BA6F4D'},
-    info: {main:'#E6CEBC'},
-    success: {main:'#A2A182'},
+    warning: {main:'#424C55'},
+    info: {main:'#D1CCDC'},
+    success: {main:'#886F68'},
   },
 });
 

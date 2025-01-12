@@ -21,6 +21,8 @@ import Star from '@mui/icons-material/Star';
 
 import Customer from '../types/Customer';
 
+import customTheme from '../theme';
+
 interface VerticalAppBarProps {
   setAccountModalOpen: () => void;
   setLoginModalOpen: () => void;
@@ -132,7 +134,7 @@ function VerticalAppBar({
     <Box sx={{ flexDirection: 'column', flexGrow: 1, height: '100%' }}>
       <AppBar
         sx={{
-          background: 'linear-gradient(180deg, #000000 0%, #687258 48%, #687258 100vw)',
+          background: `linear-gradient(180deg, #000000 0%, ${customTheme.palette.secondary.main} 48%, ${customTheme.palette.secondary.main} 100vw)`,
           width: '100%',
           height: '100%',
           borderRadius: '15px',

@@ -12,9 +12,10 @@ import Idea from '../types/Idea';
 interface CustomerHomePageContentProps {
     categories: Category[] | null;
     ideas: Idea[] | null;
+    showDescription?: boolean;
 }
 
-function CustomerHomePageContent({ ideas, categories }: CustomerHomePageContentProps) {
+function CustomerHomePageContent({ ideas, categories, showDescription }: CustomerHomePageContentProps) {
     return (
         <>
             <Box sx={{
@@ -31,7 +32,7 @@ function CustomerHomePageContent({ ideas, categories }: CustomerHomePageContentP
                 {categories && categories.map((category, index) => (
                     <Box key={`category-box-${index}`} sx={{ width: { xs: '98%', sm: 'auto' }, marginLeft: 'auto', marginRight: 'auto' }}>
                         {category.ideas && category.id &&
-                            <CategoryColumn categoryPage={false} key={`category-column-${category.id}`} id={category.id} category={category} name={category.name} ideas={ideas} renderHeader={true} />
+                            <CategoryColumn categoryPage={false} key={`category-column-${category.id}`} id={category.id} category={category} name={category.name} ideas={ideas} renderHeader={true} renderDescription={showDescription ?? false} />
                         }
                     </Box>
                 ))}

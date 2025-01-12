@@ -24,6 +24,7 @@ function CustomerHomePage() {
   const [searchQuery, setSearchQuery] = useState('');
 
   const [showIdeas, setShowIdeas] = useState(true);
+  const [showDescription, setShowDescription] = useState(true);
 
   const [modalOverLayOpen, setModalOverLayOpen] = useState(false);
   const [accountModalOpen, setAccountModalOpen] = useState(false);
@@ -133,6 +134,10 @@ function CustomerHomePage() {
     setShowIdeas(!showIdeas);
   }, [showIdeas]);
 
+  const handleSortNoDescriptionChange = useCallback(() => {
+    setShowDescription(!showDescription);
+  }, [showDescription]);
+
   const handleSortAlphaBeticalChange = useCallback(() => {
     setSortAlphaBetical(!sortAlphaBetical);
     if (sortAlphaBetical) {
@@ -182,6 +187,7 @@ function CustomerHomePage() {
             flexWrap: 'wrap',
             marginLeft: 'auto',
           }}>
+            <CustomSwitch style={{ color: 'white' }} modalOverLayOpen={showDescription} handleChange={handleSortNoDescriptionChange} label={"Show Desc."} />
             <CustomSwitch style={{ color: 'white' }} modalOverLayOpen={showIdeas} handleChange={handleSortNoIdeasChange} label={"Show Ideas"} />
             <CustomSwitch style={{ color: 'white' }} handleChange={handleSortNewChange} label={"Sort Newer First"} />
             <CustomSwitch style={{ color: 'white' }} handleChange={handleSortAlphaBeticalChange} label={"Sort Alphabetical"} />
@@ -190,6 +196,7 @@ function CustomerHomePage() {
           <CustomerHomePageContent
             categories={filteredCategories || categories}
             ideas={showIdeas === true ? ideas : []}
+            showDescription={showDescription}
           />
         </Box>
       </CustomerLayout>

@@ -22,10 +22,11 @@ import Idea from '../types/Idea';
 interface IdeaImageCardProps {
     idea: Idea | null;
     category: Category | null;
+    renderDescription?: boolean;
     handleClick?: () => void;
 }
 
-const IdeaImageCardButton = React.forwardRef<HTMLButtonElement, IdeaImageCardProps>(({ idea, category, handleClick, ...props }, ref) => {
+const IdeaImageCardButton = React.forwardRef<HTMLButtonElement, IdeaImageCardProps>(({ idea, category, renderDescription, handleClick, ...props }, ref) => {
     return (
         <Button
             ref={ref}
@@ -62,7 +63,7 @@ const IdeaImageCardButton = React.forwardRef<HTMLButtonElement, IdeaImageCardPro
     )
 });
 
-function IdeaImageCard({ idea, category }: IdeaImageCardProps) {
+function IdeaImageCard({ idea, category, renderDescription }: IdeaImageCardProps) {
     const navigate = useNavigate();
 
     const [token, setToken] = useState<string | null>(null);
@@ -144,6 +145,19 @@ function IdeaImageCard({ idea, category }: IdeaImageCardProps) {
                 <Tooltip title="Navigate to Idea page?" arrow>
                     <IdeaImageCardButton handleClick={handleClick} idea={idea} category={category} />
                 </Tooltip>
+                {renderDescription && renderDescription === true && (
+                    <Box>
+                        <Typography
+                            sx={{
+                                color: customTheme.palette.custom.black,
+                                fontFamily: 'CustomCategoryFont, sans-serif',
+                                fontSize: '20px',
+                            }}
+                        >
+                            {idea?.ideaDescription}
+                        </Typography>
+                    </Box>
+                )}
             </Box>
             <Snackbar open={snackbarOpen} autoHideDuration={6000} onClose={handleSnackbarClose}>
                 <Alert onClose={handleSnackbarClose} severity={severity}>

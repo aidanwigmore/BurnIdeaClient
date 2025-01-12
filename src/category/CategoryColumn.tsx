@@ -3,6 +3,7 @@ import React from 'react';
 import Box from '@mui/material/Box';
 import { Button } from '@mui/material';
 import { Tooltip } from '@mui/material';
+import Typography from '@mui/material/Typography';
 
 import Edit from '@mui/icons-material/Edit';
 
@@ -37,7 +38,7 @@ function CategoryColumn({ renderDescription, renderHeader, id, name, ideas, cate
                     <Box sx={{ display: 'flex', flexDirection: 'column', gap: '12px', backgroundColor: customTheme.palette.secondary.main, borderRadius: '15px', marginBottom: '12px', marginLeft: 'auto', marginRight: 'auto' }}>
                         <Box sx={{ display: 'flex', flexDirection: 'row', width: '100%', backgroundColor: customTheme.palette.secondary.main, borderRadius: '15px', gap: '12px', marginRight: 'auto', overflow: 'hidden', flexWrap: 'wrap', marginLeft: 'auto' }}>
                             <Box sx={{ padding: '12px', marginLeft: 'auto', marginRight: 'auto' }}>
-                                <p>{category && category.categoryDescription}</p>
+                                <Typography color={customTheme.palette.primary.main}>{category.categoryDescription}</Typography>
                             </Box>
                         </Box>
                     </Box>
@@ -51,7 +52,7 @@ function CategoryColumn({ renderDescription, renderHeader, id, name, ideas, cate
                                     if (!isNaN(ideaId) && category && category.ideas && category.ideas.includes(ideaId)) {
                                         return (
                                             <React.Fragment key={`idea-fragment-${idea.id}`}>
-                                                <IdeaImageCard key={`idea-${idea.id}`} idea={idea} category={category} />
+                                                <IdeaImageCard key={`idea-${idea.id}`} idea={idea} category={category} renderDescription={renderDescription}/>
                                             </React.Fragment>
                                         );
                                     }
@@ -67,7 +68,7 @@ function CategoryColumn({ renderDescription, renderHeader, id, name, ideas, cate
                                     if (!isNaN(ideaId) && category && category.ideas && category.ideas.includes(ideaId)) {
                                         return (
                                             <React.Fragment key={`idea-fragment-${idea.id}`}>
-                                                <IdeaImageCard key={`idea-${idea.id}`} idea={idea} category={category} />
+                                                <IdeaImageCard key={`idea-${idea.id}`} idea={idea} category={category} renderDescription={renderDescription} />
                                             </React.Fragment>
                                         );
                                     }

@@ -35,7 +35,7 @@ const CategoryButton = React.forwardRef<HTMLButtonElement, CategoryButtonProps>(
                 borderRadius: "15px",
                 boxShadow: "0 4px 8px 0 rgba(0,0,0,0.2)",
                 color: customTheme.palette.custom.black,
-                fontFamily: 'CustomCategoryFont, sans-serif',
+                fontFamily: 'Raleway Large, sans-serif',
                 fontWeight: 1000,
                 backgroundColor: category?.color ?? customTheme.palette.success.main,
                 fontSize: fontSize ? fontSize : '150%',

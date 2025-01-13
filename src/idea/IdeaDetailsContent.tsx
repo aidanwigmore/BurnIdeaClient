@@ -21,6 +21,9 @@ function IdeaDetailsContent({ idea, category }: IdeaDetailsContentProps) {
                 display: 'flex',
                 flexDirection: { xs: 'column', sm: 'row' },
                 alignItems: 'top',
+                justifyContent: 'space-between',
+                marginLeft: 'auto',
+                marginRight: 'auto',
                 width: '99%',
             }}
         >

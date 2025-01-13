@@ -5,6 +5,7 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 
 import CustomSwitch from '@materials/CustomSwitch';
+import IdeaBurnLogo from '@materials/IdeaBurnLogo';
 import Title from '@header/Title';
 
 import customTheme from '../theme';
@@ -46,11 +47,9 @@ function Header({ modalOverLayOpen, setModalOverLayOpen }: HeaderProps) {
           borderRadius: '15px',
         }}
       >
-        <Box sx={{display: 'inline-flex', flexDirection: 'row', justifyContent: 'center', alignItems: 'center'}}>
-          <Title title={"Idea"} />
-          <img style={{paddingBottom: '8%'}} src='/burn.gif' />
+        <Box sx={{display: 'inline-flex', flexDirection: 'row', justifyContent: 'flex-start', width: '99%' }}>
+          <IdeaBurnLogo />
         </Box>
-
       </Button>
     </Box>
   );

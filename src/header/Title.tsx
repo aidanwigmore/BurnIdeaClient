@@ -13,9 +13,7 @@ function Title({ title }: TitleProps) {
     <Typography
       sx={{
         color: customTheme.palette.info.main,
-        fontFamily: 'CustomTitleFont, times new roman',
-        fontWeight: 1000,
-        fontSize: 50,
+        fontFamily: 'Raleway Large',
         '-webkit-text-stroke': `2px ${customTheme.palette.info.light}`,
       }}
     >

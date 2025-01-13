@@ -106,7 +106,6 @@ function CustomerLayout({
                         gridTemplateAreas: bannerDisplayed ? `
                         "header header header"
                         "vertSideBar horiSideBar horiSideBar"
-                        "vertSideBar banner banner"
                         "vertSideBar content content"
                         "footer footer footer" 
                         ` : `

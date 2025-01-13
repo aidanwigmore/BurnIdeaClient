@@ -1,0 +1,21 @@
+@font-face {
+    font-family: 'Raleway Large';
+    src: url('/public/ds-fonts/raleway-modified-700/raleway-modified-700.ttf') format('opentype');
+    font-weight: 700;
+    font-size: 50;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Raleway Medium';
+    src: url('/public/ds-fonts/raleway-modified-600/raleway-modified-600.ttf') format('opentype');
+    font-weight: 600;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Raleway Small';
+    src: url('/public/ds-fonts/raleway-modified-400/raleway-modified-400.ttf') format('opentype');
+    font-weight: 400;
+    font-style: normal;
+}

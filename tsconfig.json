@@ -35,6 +35,12 @@
       "@content/*": [
         "content/*"
       ],
+      "@context/*": [
+        "context/*"
+      ],
+      "@filters/*": [
+        "filters/*"
+      ],
     },
     "target": "es5",
     "lib": [

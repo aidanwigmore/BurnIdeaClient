@@ -1,6 +1,8 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import axios from 'axios';
 
+import { useAuth } from '@context/AuthContext';
+
 import Box from '@mui/material/Box';
 import Cancel from '@mui/icons-material/Cancel';
 import Edit from '@mui/icons-material/Edit';
@@ -19,15 +21,11 @@ import Customer from '../types/Customer';
 
 interface AccountFormProps {
     handleNavigation: (url: string | undefined) => void;
-    customer: Customer | null;
-    token: string;
 }
 
-function AccountForm({ token, customer, handleNavigation }: AccountFormProps) {
-    const [name, setName] = useState('');
-    const [givenName, setGivenName] = useState('');
-    const [phoneNumber, setPhoneNumber] = useState('');
-    const [email, setEmail] = useState('');
+function AccountForm({ handleNavigation }: AccountFormProps) {
+    const { customer, fetchCustomerDetails, updateCustomerDetails, error } = useAuth();
+    const [updatedCustomer, setUpdatedCustomer] = useState<Partial<Customer>>({});
 
     const [renderEditDelete, setRenderEditDelete] = useState(true);
     const [snackbarOpen, setSnackbarOpen] = useState(false);
@@ -37,54 +35,39 @@ function AccountForm({ token, customer, handleNavigation }: AccountFormProps) {
     const [edit, setEdit] = useState(false);
     const [save, setSave] = useState(false);
     const [cancel, setCancel] = useState(false);
-    const [deleteAccount, setDeleteAccount] = useState(false);
 
     const handleSnackbarClose = () => {
         setSnackbarOpen(false);
     };
 
-    const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setName(e.target.value);
-    }
+    // const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    //     setName(e.target.value);
+    // }
 
-    const handleGivenNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setGivenName(e.target.value);
-    };
+    // const handleGivenNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    //     setGivenName(e.target.value);
+    // };
 
-    const handlePhoneNumberChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setPhoneNumber(e.target.value);
-    };
+    // const handlePhoneNumberChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    //     setPhoneNumber(e.target.value);
+    // };
 
-    const handleSave = useCallback(() => {
-        setRenderEditDelete(true);
-        setSave(!save);
-        const customerData = {
-            name: name,
-            givenName: givenName,
-            phoneNumber: phoneNumber,
-            email: email,
-        };
+    useEffect(() => {
+        fetchCustomerDetails();
+      }, [fetchCustomerDetails]);
+
+      const handleUpdate = async () => {
         try {
-            axios.put(`${process.env.REACT_APP_API_BASE}/api/customers/update/`, customerData, {
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Token ${token}`
-                }
-            })
-                .then((response) => {
-                    setSnackbarMessage('Customer updated successfully');
-                    setSeverity('success');
-                })
-                .catch((error) => {
-                    setSnackbarMessage('Error updating customer');
-                    setSeverity('error');
-                });
-        } catch (error) {
-            setSnackbarMessage('Error updating customer');
-            setSeverity('error');
+          await updateCustomerDetails(updatedCustomer);
+          setSnackbarMessage('Customer details updated successfully.');
+          setSeverity('success');
+          setSnackbarOpen(true);
+        } catch (err) {
+          setSnackbarMessage('Failed to update customer details.');
+          setSeverity('error');
+          setSnackbarOpen(true);
         }
-        setSnackbarOpen(true)
-    }, [name, givenName, phoneNumber, email, token, save]);
+      };
 
     const handleSetEdit = useCallback(() => {
         setRenderEditDelete(false);
@@ -96,20 +79,6 @@ function AccountForm({ token, customer, handleNavigation }: AccountFormProps) {
         setCancel(!cancel);
     }, [setCancel, cancel]);
 
-    const handleDelete = useCallback(() => {
-        setRenderEditDelete(true);
-        setDeleteAccount(!deleteAccount);
-    }, [setDeleteAccount, deleteAccount]);
-
-    useEffect(() => {
-        if (customer) {
-            setName(customer.name);
-            setGivenName(customer.givenName);
-            setPhoneNumber(customer.phoneNumber);
-            setEmail(customer.email);
-        }
-    }, [customer]);
-
     return (
         <>
             <Box
@@ -119,8 +88,20 @@ function AccountForm({ token, customer, handleNavigation }: AccountFormProps) {
                     justifyContent: 'space-around',
                 }}
             >
-                <CustomInput id={0} text={"First Name"} value={name} onChange={handleNameChange} error={""} />
-                <CustomInput id={1} text={"Last Name"} value={givenName} onChange={handleGivenNameChange} error={" "} />
+                <CustomInput 
+                    id={0} 
+                    text={"First Name"} 
+                    value={updatedCustomer.name || customer?.name} 
+                    onChange={(e) => setUpdatedCustomer({ ...updatedCustomer, name: e.target.value })} 
+                    error={""} 
+                />
+                <CustomInput 
+                    id={1} 
+                    text={"Last Name"} 
+                    value={updatedCustomer.givenName || customer?.givenName} 
+                    onChange={(e) => setUpdatedCustomer({ ...updatedCustomer, givenName: e.target.value })} 
+                    error={""} 
+                />
             </Box>
             <Box
                 sx={{
@@ -130,8 +111,19 @@ function AccountForm({ token, customer, handleNavigation }: AccountFormProps) {
                     justifyContent: 'space-around',
                 }}
             >
-                <CustomInput id={2} text={"Phone Number"} value={phoneNumber} onChange={handlePhoneNumberChange} error={""} />
-                <CustomInput id={3} text={`${email}`} disabled={true} error={""} />
+                <CustomInput 
+                    id={2} 
+                    text={"Phone Number"} 
+                    value={updatedCustomer.phoneNumber || customer?.phoneNumber} 
+                    onChange={(e) => setUpdatedCustomer({ ...updatedCustomer, phoneNumber: e.target.value })}
+                    error={""} />
+                <CustomInput 
+                    id={3} 
+                    text={"Email"}
+                    value={customer?.email}
+                    disabled={true}
+                    error={""} 
+                />
             </Box>
             <Box
                 sx={{
@@ -163,9 +155,8 @@ function AccountForm({ token, customer, handleNavigation }: AccountFormProps) {
                     <FormButtonGroup
                         texts={[
                             'Edit Account ',
-                            'Delete Account',
                         ]}
-                        actions={[handleSetEdit, handleDelete]}
+                        actions={[handleSetEdit]}
                         icons={[<Edit />, <Garbage />]}
                         colours={[customTheme.palette.success.main, customTheme.palette.error.main]}
                     />
@@ -182,7 +173,7 @@ function AccountForm({ token, customer, handleNavigation }: AccountFormProps) {
                             'Save Changes ',
                             'Cancel Changes',
                         ]}
-                        actions={[handleSave, handleCancel]}
+                        actions={[handleUpdate, handleCancel]}
                         icons={[<Save />, <Cancel />]}
                         colours={[customTheme.palette.success.main, customTheme.palette.error.main]}
                     />

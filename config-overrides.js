@@ -17,6 +17,8 @@ module.exports = override(
         '@pages': path.resolve(__dirname, 'src/Pages'),
         '@idea': path.resolve(__dirname, 'src/idea'),
         '@types': path.resolve(__dirname, 'src/types'),
+        '@context': path.resolve(__dirname, 'src/context'),
+        '@filters': path.resolve(__dirname, 'src/filters'),
         '@theme': path.resolve(__dirname, 'src/theme'),
     }),
     (config) => {

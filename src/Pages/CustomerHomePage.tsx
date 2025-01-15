@@ -1,10 +1,11 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
 
-import Box from '@mui/material/Box';
-import CustomInput from '@materials/CustomInput';
+import { useAuth } from '@context/AuthContext';
 
-import CustomSwitch from '@materials/CustomSwitch';
+import Box from '@mui/material/Box';
+
+import Filters from 'filters/Filters';
 import CustomerHomePageContent from '@content/CustomerHomePageContent';
 import CustomerLayout from '@layout/CustomerLayout';
 
@@ -14,10 +15,11 @@ import Idea from '../types/Idea';
 import customTheme from '../theme';
 
 function CustomerHomePage() {
-
   const [categories, setCategories] = useState<Category[] | null>(null);
   const [ideas, setIdeas] = useState<Idea[] | null>(null);
 
+  const { customer, fetchCustomerDetails, error } = useAuth();
+  
   const [sortNew, setSortNew] = useState<Boolean>(true);
   const [sortAlphaBetical, setSortAlphaBetical] = useState<Boolean>(false);
 
@@ -25,7 +27,6 @@ function CustomerHomePage() {
 
   const [showIdeas, setShowIdeas] = useState(true);
   const [showDescription, setShowDescription] = useState(true);
-
   const [modalOverLayOpen, setModalOverLayOpen] = useState(false);
   const [accountModalOpen, setAccountModalOpen] = useState(false);
   const [loginModalOpen, setLoginModalOpen] = useState(false);
@@ -81,26 +82,6 @@ function CustomerHomePage() {
       .catch(error => {
         console.error('Error fetching ideas:', error);
       });
-  }, []);
-
-  useEffect(() => {
-    const token = localStorage.getItem('token');
-    if (token) {
-      try {
-        axios.get(`${process.env.REACT_APP_API_BASE}/api/customers/me/`, {
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Token ${token}`
-          }
-        })
-          .then((response) => {
-          })
-          .catch((error) => {
-          });
-      } catch (error) {
-        console.error('Error fetching address:', error);
-      }
-    }
   }, []);
 
   const handleSearchInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -172,27 +153,16 @@ function CustomerHomePage() {
         handleRegisterModalOpen={handleRegisterModalOpen}
       >
         <Box sx={{ gridArea: 'content' }}>
-          <Box sx={{
-            display: 'flex',
-            flexDirection: 'row',
-            width: '100%',
-            justifyContent: 'center',
-            alignItems: 'center',
-            backgroundColor: customTheme.palette.secondary.main,
-            borderRadius: '15px',
-            gap: '12px',
-            marginRight: 'auto',
-            marginBottom: '12px',
-            overflow: 'hidden',
-            flexWrap: 'wrap',
-            marginLeft: 'auto',
-          }}>
-            <CustomSwitch style={{ color: 'white' }} modalOverLayOpen={showDescription} handleChange={handleSortNoDescriptionChange} label={"Show Desc."} />
-            <CustomSwitch style={{ color: 'white' }} modalOverLayOpen={showIdeas} handleChange={handleSortNoIdeasChange} label={"Show Ideas"} />
-            <CustomSwitch style={{ color: 'white' }} handleChange={handleSortNewChange} label={"Sort Newer First"} />
-            <CustomSwitch style={{ color: 'white' }} handleChange={handleSortAlphaBeticalChange} label={"Sort Alphabetical"} />
-            <CustomInput color={"white"} id={0} text={"Search Categories"} value={searchQuery} onChange={handleSearchInputChange} error={""} />
-          </Box>
+          <Filters 
+            context={'customerHomePage'} 
+            showDescription={showDescription} 
+            handleSortNoDescriptionChange={handleSortNoDescriptionChange}
+            showIdeas={showIdeas}
+            handleSortNoIdeasChange={handleSortNoIdeasChange}
+            handleSortNewChange={handleSortNewChange}
+            searchQuery={searchQuery}
+            handleSearchInputChange={handleSearchInputChange}
+          />
           <CustomerHomePageContent
             categories={filteredCategories || categories}
             ideas={showIdeas === true ? ideas : []}

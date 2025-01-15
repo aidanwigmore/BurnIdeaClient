@@ -1,5 +1,6 @@
 import React, { useState, useCallback } from 'react';
-import axios from 'axios';
+
+import { useAuth } from '@context/AuthContext';
 
 import Alert from '@mui/material/Alert';
 import Box from '@mui/material/Box';
@@ -18,6 +19,8 @@ interface LoginFormProps {
 }
 
 function LoginForm({ handleNavigation }: LoginFormProps) {
+  const { login } = useAuth();
+  
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
@@ -35,13 +38,8 @@ function LoginForm({ handleNavigation }: LoginFormProps) {
   };
 
   const handleSubmit = useCallback(() => {
-    axios.post(`${process.env.REACT_APP_API_BASE}/api/customers/login/`, { email, password }, {
-      headers: {
-        'Content-Type': 'application/json',
-      }
-    })
+    login(email, password)
       .then((response) => {
-        localStorage.setItem('token', response.data.token);
         setSnackbarMessage('Login successful');
         setSeverity('success');
         setTimeout(() => {

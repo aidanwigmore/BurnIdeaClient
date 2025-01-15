@@ -2,6 +2,7 @@ import React, { useCallback, useEffect, useState } from 'react';
 import axios from 'axios';
 
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '@context/AuthContext';
 
 import Alert from '@mui/material/Alert';
 import AccountCircleOutlined from '@mui/icons-material/AccountCircleOutlined';
@@ -36,14 +37,13 @@ function VerticalAppBar({
 }: VerticalAppBarProps) {
 
   const navigate = useNavigate();
+  const { customer, logout, token, login, error } = useAuth();
 
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState('');
   const [severity, setSeverity] = useState<"error" | "success" | "info" | "warning">('error');
 
-  const token = localStorage.getItem('token');
-
-  const [customer, setCustomer] = useState<Customer | null>(null);
+  const [setCustomer] = useState<Customer | null>(null);
 
   const handleSnackbarClose = () => {
     setSnackbarOpen(false);
@@ -62,8 +62,7 @@ function VerticalAppBar({
   }, [setRegisterModalOpen]);
 
   const handleLogout = useCallback(() => {
-    localStorage.removeItem('token');
-    setCustomer(null);
+    logout();
     setSnackbarMessage('Logging out. Please refresh your browser.');
     setSnackbarOpen(true);
     setSeverity('info');
@@ -72,33 +71,19 @@ function VerticalAppBar({
     }, 2000);
   }, [navigate]);
 
-  useEffect(() => {
-    if (token) {
-      try {
-        axios.get(`${process.env.REACT_APP_API_BASE}/api/customers/me/`, {
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Token ${token}`
-          }
-        })
-          .then((response: { data: Customer }) => {
-            setCustomer(response.data);
-            setSnackbarMessage('Successful sign-in from client storage.');
-            setSnackbarOpen(true);
-            setSeverity('success');
-          })
-          .catch((error : unknown) => {
-            setSnackbarMessage('Error signing in from client storage.');
-            setSnackbarOpen(true);
-            setSeverity('error');
-          });
-      } catch (error) {
-        setSnackbarMessage('Error signing in from client storage.');
-        setSnackbarOpen(true);
-        setSeverity('error');
-      }
+  //handle login
+  const handleLogin = useCallback(async (email: string, password: string) => {
+    try {
+      await login(email, password);
+      setSnackbarMessage('Login successful');
+      setSnackbarOpen(true);
+      setSeverity('success');
+    } catch (err) {
+      setSnackbarMessage('Login failed');
+      setSnackbarOpen(true);
+      setSeverity('error');
     }
-  }, [navigate, token]);
+  }, [login]);
 
   const renderLoginButtons = useCallback(() => {
     if (customer && token) {
@@ -128,7 +113,7 @@ function VerticalAppBar({
         </>
       );
     }
-  }, [customer, token, handleAccountModalOpen, handleLoginOpen, handleLogout, handleRegisterOpen]);
+  }, [customer, token, handleAccountModalOpen, handleLoginOpen, handleLogout, handleLogin, handleRegisterOpen]);
 
   return (
     <Box sx={{ flexDirection: 'column', flexGrow: 1, height: '100%' }}>

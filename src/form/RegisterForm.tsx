@@ -1,5 +1,6 @@
 import React, { useState, useCallback } from 'react';
-import axios from 'axios';
+
+import { useAuth } from '@context/AuthContext';
 
 import Alert from '@mui/material/Alert';
 import Box from '@mui/material/Box';
@@ -20,6 +21,8 @@ interface RegisterFormProps {
 }
 
 function RegisterForm({ handleNavigation }: RegisterFormProps) {
+    const { register } = useAuth();
+  
   const [email, setEmail] = useState('');
   const [name, setName] = useState('');
   const [givenName, setGivenName] = useState('');
@@ -53,24 +56,9 @@ function RegisterForm({ handleNavigation }: RegisterFormProps) {
       setErrors({ ...errors, confirmPassword: 'Passwords do not match' });
       return;
     } else {
-      axios.post(`${process.env.REACT_APP_API_BASE}/api/customers/register/`, {
-        email,
-        name,
-        givenName,
-        password,
-        phoneNumber,
-        subscribedToNewsletter,
-        smsNotifications,
-        emailNotifications,
-      }, {
-        headers: {
-          'Content-Type': 'application/json',
-        }
-      })
-        .then((response) => {
+      register(name, email, password, givenName, phoneNumber, subscribedToNewsletter, smsNotifications, emailNotifications)
+        .then(() => {
           setSnackbarMessage('Successfully Registered');
-          localStorage.setItem('token', response.data.token);
-          localStorage.setItem('customer', JSON.stringify(response.data.customer));
           setSeverity('success');
           setTimeout(() => {
             handleNavigation('/');

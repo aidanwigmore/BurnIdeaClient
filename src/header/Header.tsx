@@ -11,11 +11,12 @@ import Title from '@header/Title';
 import customTheme from '../theme';
 
 interface HeaderProps {
+  admin?: boolean;
   modalOverLayOpen: boolean;
   setModalOverLayOpen: () => void;
 }
 
-function Header({ modalOverLayOpen, setModalOverLayOpen }: HeaderProps) {
+function Header({ modalOverLayOpen, setModalOverLayOpen, admin }: HeaderProps) {
   const navigate = useNavigate();
 
   const handleClick = () => {
@@ -48,7 +49,7 @@ function Header({ modalOverLayOpen, setModalOverLayOpen }: HeaderProps) {
         }}
       >
         <Box sx={{display: 'inline-flex', flexDirection: 'row', justifyContent: 'flex-start', width: '99%' }}>
-          <IdeaBurnLogo />
+          <IdeaBurnLogo admin={admin}/>
         </Box>
       </Button>
     </Box>

@@ -6,10 +6,10 @@ import Typography from '@mui/material/Typography';
 import customTheme from '../theme';
 
 interface IdeaBurnLogoProps {
-    
+    admin?: boolean;
 }
 
-function IdeaBurnLogo({  }: IdeaBurnLogoProps) {
+function IdeaBurnLogo({ admin }: IdeaBurnLogoProps) {
 
     return (
         <Box
@@ -22,7 +22,13 @@ function IdeaBurnLogo({  }: IdeaBurnLogoProps) {
                     fontFamily: 'Raleway Large',
                 }}
                 >
-                {'IdeaBurn'}
+                {
+                    admin && admin===true ? (
+                        'IDEABURN - ADMIN'
+                    ) : (
+                        'IDEABURN'
+                    )
+                }
             </Typography>
         </Box>
     );

@@ -4,9 +4,12 @@ import { useNavigate } from 'react-router-dom';
 
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
+import Typography from '@mui/material/Typography';
 
 import AdminCategoryModal from '@adminModals/AdminCategoryModal';
-import AdminHeader from '@header/AdminHeader';
+
+import Footer from '@layout/Footer';
+import Header from '@header/Header';
 import AdminVerticalAppBar from '@adminLayout/AdminVerticalAppBar';
 import AdminHorizontalAppBar from '@adminLayout/AdminHorizontalAppBar';
 import AdminModalControl from '@customerModals/ModalOverLay';
@@ -176,26 +179,29 @@ function AdminLayout({
                     gridTemplateAreas: bannerDisplayed ? `
                         "header header header"
                         "vertSideBar horiSideBar horiSideBar"
-                        "vertSideBar banner banner"
                         "vertSideBar content content"
+                        "footer footer footer" 
                         ` : `
                         "header header header"
                         "vertSideBar horiSideBar horiSideBar"
                         "vertSideBar content content"
+                        "footer footer footer"
                         `,
                     gridTemplateColumns: '100px 1fr 1fr',
-                    gridTemplateRows: '1fr 1fr 1fr 1fr 1fr',
+                    gridTemplateRows: '1fr 1fr 1fr 1fr 1fr 1fr',
                     height: '100vh',
                     gap: '12px',
                 }}
             >
                 <Box sx={{
                         gridArea: 'header',
+                        display: 'inline',
+                        alignItems: 'center',
                         backgroundColor: customTheme.palette.secondary.main,
                         borderRadius: '15px',
                         boxShadow: '0 4px 8px 0 rgba(0,0,0,0.2)',
                     }}>
-                    <AdminHeader modalOverLayOpen={modalOverLayOpen} setModalOverLayOpen={handleModalOverLayOpen} />
+                    <Header modalOverLayOpen={modalOverLayOpen} setModalOverLayOpen={handleModalOverLayOpen} admin={true}/>
                 </Box>
                 <Box sx={{ gridArea: 'vertSideBar' }}>
                     <AdminVerticalAppBar

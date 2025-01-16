@@ -11,7 +11,7 @@ import Save from '@mui/icons-material/CheckOutlined';
 
 import Alert from '@mui/material/Alert';
 import CustomCheckBox from '@materials/CustomCheckBox';
-import CustomInput from '@materials/CustomInput';
+import CustomInput from '@materials/SearchInput';
 import FormButtonGroup from '@materials/FormButtonGroup';
 import Snackbar from '@mui/material/Snackbar';
 
@@ -121,6 +121,7 @@ function AccountForm({ handleNavigation }: AccountFormProps) {
                     id={3} 
                     text={"Email"}
                     value={customer?.email}
+                    onChange={() => {}}
                     disabled={true}
                     error={""} 
                 />

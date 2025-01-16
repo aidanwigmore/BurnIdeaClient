@@ -13,6 +13,8 @@ import IdeaForm from '@form/IdeaForm';
 
 import Idea from '../types/Idea';
 
+import { Size } from '../types/Size';
+
 import customTheme from '../theme';
 
 interface AdminIdeaModalProps {
@@ -118,7 +120,7 @@ function AdminIdeaModal({ idea, ideas, setIdea, setIdeas, handleResetIdea, handl
             }}
         >
             <Box sx={{ width: '100%', textAlign: 'center' }}>
-                <Text text={"Ideas"} />
+                <Text size={Size.large} text={"Ideas"} />
             </Box>
             <Divider />
             {(selectedIdea || newIdea) ? (

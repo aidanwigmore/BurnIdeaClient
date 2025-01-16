@@ -3,15 +3,19 @@ import React, { useState } from 'react';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Input from '@mui/material/Input';
-import Typography from '@mui/material/Typography';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
+import Divider from '@mui/material/Divider';
 
 import ExpandIcon from '@mui/icons-material/ExpandMore';
+
+import Text from '@materials/Text';
 
 import customTheme from '../theme';
 
 import FAQ from '../types/FAQ';
+
+import { Size } from '../types/Size';
 
 interface FAQContentProps {
     faqs: FAQ[] | null;
@@ -54,10 +58,11 @@ function FAQContent({ faqs }: FAQContentProps) {
                     marginBottom: '12px',
                     marginLeft: 'auto',
                     marginRight: 'auto',
+                    width: '100%',
                 }}>
-                    <Typography variant="h4" sx={{ color: 'white' }}>FAQ</Typography>
-                    <Input sx={{ color: customTheme.palette.primary.main }} id={'0'} placeholder='Search' value={searchQuery} onChange={handleSearchInputChange} />
-                    
+                    <Text color={customTheme.palette.primary.main} sx={{ width: '99%', textAlign: 'center' }} size={Size.large} text={"FAQ"} />
+                    <Divider color={customTheme.palette.primary.main}/>
+                    <Input sx={{color: 'primary.main'}} id={'0'} placeholder='Search' value={searchQuery} onChange={handleSearchInputChange} />
                     <Box>
                         <List>
                             {filteredQuestions?.map((faq, index) => (
@@ -73,13 +78,13 @@ function FAQContent({ faqs }: FAQContentProps) {
                                         borderRadius: '12px',
                                     }}
                                 >
-                                    <Button sx={{ color: 'success.main', fontSize: '12px', display: 'flex', flexDirection: 'row' }} onClick={() => handleToggleQuestion(index)} startIcon={<ExpandIcon sx={{ width: '36px', height: '36px' }} />}>
-                                        <Typography>{faq.question}?</Typography>
+                                    <Button sx={{ color: 'secondary.main', fontSize: '12px', display: 'flex', flexDirection: 'row' }} onClick={() => handleToggleQuestion(index)} startIcon={<ExpandIcon sx={{ width: '36px', height: '36px' }} />}>
+                                        <Text sx={{ width: '99%', textAlign: 'center' }} size={Size.medium} text={`${faq.question}?`} />
                                     </Button>
                                     {expandedQuestion === index && (
                                         <>
+                                            <Text sx={{ width: '99%', textAlign: 'center' }} size={Size.medium} text={`${faq.answer}`} />
                                             <img src={faq.image} alt={faq.question} />
-                                            <Typography>{faq.answer}</Typography>
                                         </>
                                     )}
                                 </ListItem>

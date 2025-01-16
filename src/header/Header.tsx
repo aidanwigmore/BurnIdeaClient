@@ -6,7 +6,6 @@ import Button from '@mui/material/Button';
 
 import CustomSwitch from '@materials/CustomSwitch';
 import IdeaBurnLogo from '@materials/IdeaBurnLogo';
-import Title from '@header/Title';
 
 import customTheme from '../theme';
 

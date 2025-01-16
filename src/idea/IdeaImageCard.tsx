@@ -12,12 +12,15 @@ import Snackbar from '@mui/material/Snackbar';
 import ShoppingCart from '@mui/icons-material/ShoppingCart';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
-import Typography from '@mui/material/Typography';
+
+import Text from '@materials/Text';
 
 import customTheme from '../theme';
 
 import Category from '../types/Category';
 import Idea from '../types/Idea';
+
+import { Size } from '../types/Size';
 
 interface IdeaImageCardProps {
     idea: Idea | null;
@@ -124,37 +127,23 @@ function IdeaImageCard({ idea, category, renderDescription }: IdeaImageCardProps
                         display: 'inline-flex',
                         flexDirection: 'row',
                         width: '99%',
-                        justifyContent: 'space-around',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                    }}  
+                >
+                    <Text sx={{textAlign: 'center'}} size={Size.large} text={idea?.name ?? 'Idea Name'}/>
+                </Box>
+                <Box
+                    sx={{
+                        display: 'inline-flex',
+                        flexDirection: 'row',
+                        width: '99%',
+                        justifyContent: 'space-between',
                         alignItems: 'center',
                     }}
                 >
-                    <Typography
-                        sx={{
-                            color: customTheme.palette.custom.black,
-                            fontFamily: 'CustomCategoryFont, sans-serif',
-                            fontSize: '25px',
-                        }}
-                    >
-                        {idea?.name}
-                    </Typography>
-                    <Typography
-                        sx={{
-                            color: customTheme.palette.custom.black,
-                            fontFamily: 'CustomCategoryFont, sans-serif',
-                            fontSize: '25px',
-                        }}
-                    >
-                        Difficulty: {idea?.ideaDifficulty}
-                    </Typography>
-                    <Typography
-                        sx={{
-                            color: customTheme.palette.custom.black,
-                            fontFamily: 'CustomCategoryFont, sans-serif',
-                            fontSize: '25px',
-                        }}
-                    >
-                        Created: { idea && idea.dateCreated && formatDate(idea.dateCreated.toString()) } minutes
-                    </Typography>
+                    <Text size={Size.medium} text={'Difficulty: ' + idea?.ideaDifficulty + ''}/>
+                    <Text size={Size.medium} text={`Created: ${ idea && idea.dateCreated && formatDate(idea.dateCreated.toString()) }`}/>
                 </Box>
                 <Tooltip title="Navigate to Idea page?" arrow>
                     <IdeaImageCardButton handleClick={handleClick} idea={idea} category={category} />
@@ -170,15 +159,7 @@ function IdeaImageCard({ idea, category, renderDescription }: IdeaImageCardProps
                             padding: '12px',
                         }}
                     >
-                        <Typography
-                            sx={{
-                                color: customTheme.palette.custom.black,
-                                fontFamily: 'CustomCategoryFont, sans-serif',
-                                fontSize: '20px',
-                            }}
-                        >
-                            {idea?.ideaDescription}
-                        </Typography>
+                        <Text size={Size.medium} text={idea?.ideaDescription ?? ''}/>
                     </Box>
                 )}
             </Box>

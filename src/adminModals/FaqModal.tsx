@@ -13,6 +13,8 @@ import FaqForm from '@form/FaqForm';
 
 import FAQ from '../types/FAQ';
 
+import { Size } from '../types/Size';
+
 import customTheme from '../theme';
 
 interface FaqModalProps {
@@ -113,7 +115,7 @@ function FaqModal({ faq, faqs, setFaq, setFaqs, handleResetFaq, handleNavigation
             }}
         >
             <Box sx={{ width: '100%', textAlign: 'center' }}>
-                <Text text={"Faqs"} />
+                <Text size={Size.large} text={"Faqs"} />
             </Box>
             <Divider />
             {(selectedFaq || newFaq) ? (

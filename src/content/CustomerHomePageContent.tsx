@@ -30,10 +30,12 @@ function CustomerHomePageContent({ ideas, categories, showDescription }: Custome
                 flexWrap: 'wrap',
             }}>
                 {categories && categories.map((category, index) => (
-                    <Box key={`category-box-${index}`} sx={{ width: { xs: '98%', sm: 'auto' }, marginLeft: 'auto', marginRight: 'auto' }}>
-                        {category.ideas && category.id &&
-                            <CategoryColumn categoryPage={false} key={`category-column-${category.id}`} id={category.id} category={category} name={category.name} ideas={ideas} renderHeader={true} renderDescription={showDescription ?? false} />
-                        }
+                    <Box key={index} sx={{ padding: '12px', marginLeft: 'auto', marginRight: 'auto', width: '100%' }}>
+                        <Box key={`category-box-${index}`} sx={{ marginLeft: 'auto', marginRight: 'auto', width: '100%' }}>
+                            {category.ideas && category.id &&
+                                <CategoryColumn key={`category-column-${category.id}`} id={category.id} category={category} name={category.name} ideas={ideas} renderHeader={true} renderDescription={showDescription}/>
+                            }
+                        </Box>
                     </Box>
                 ))}
             </Box >

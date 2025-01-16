@@ -13,6 +13,7 @@ import CategoryForm from '@form/CategoryForm';
 
 import Category from '../types/Category';
 import Idea from '../types/Idea';
+import { Size } from '../types/Size';
 
 interface AdminCategoryModalProps {
     category: Category | null;
@@ -104,7 +105,7 @@ function AdminCategoryModal({ category, ideas, setCategory, setCategories, categ
             }}
         >
             <Box sx={{ width: '100%', textAlign: 'center' }}>
-                <Text text={"Categories"} />
+                <Text size={Size.large} text={"Categories"} />
             </Box>
             {(selectedCategory || newCategory) ? (
                 <>

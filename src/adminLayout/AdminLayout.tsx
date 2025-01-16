@@ -3,8 +3,6 @@ import React, { useState, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
-import Typography from '@mui/material/Typography';
 
 import AdminCategoryModal from '@adminModals/AdminCategoryModal';
 
@@ -219,6 +217,9 @@ function AdminLayout({
                 </Box>
                 <Box sx={{ gridArea: 'content' }}>
                     {children}
+                </Box>
+                <Box sx={{ gridArea: 'footer' }}>
+                    <Footer />
                 </Box>
             </Box>
         </>

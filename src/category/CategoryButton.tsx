@@ -7,15 +7,15 @@ import Button from '@mui/material/Button';
 import customTheme from '../theme';
 
 import Category from '../types/Category';
+import { Size } from '../types/Size';
 
 interface CategoryButtonProps {
     text: string;
     categoryId: string;
     category?: Category;
-    fontSize?: number;
 }
 
-const CategoryButton = React.forwardRef<HTMLButtonElement, CategoryButtonProps>(({ text, categoryId, fontSize, category }, ref) => {
+const CategoryButton = React.forwardRef<HTMLButtonElement, CategoryButtonProps>(({ text, categoryId, category }, ref) => {
     const navigate = useNavigate();
 
     const handleClick = () => {
@@ -36,9 +36,8 @@ const CategoryButton = React.forwardRef<HTMLButtonElement, CategoryButtonProps>(
                 boxShadow: "0 4px 8px 0 rgba(0,0,0,0.2)",
                 color: customTheme.palette.custom.black,
                 fontFamily: 'Raleway Large, sans-serif',
-                fontWeight: 1000,
+                fontSize: Size["large"],
                 backgroundColor: category?.color ?? customTheme.palette.success.main,
-                fontSize: fontSize ? fontSize : '150%',
             }}
             onClick={() => {}}
         >

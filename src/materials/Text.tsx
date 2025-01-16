@@ -3,27 +3,45 @@ import React from 'react';
 import Typography from '@mui/material/Typography';
 
 import customTheme from '../theme';
+import { Size } from '../types/Size';
 
 interface TextProps {
     text: string;
-    size?: any;
-    font?: boolean;
+    size?: Size;
     color?: string;
-    justifyContent?: any;
     sx?: any;
 }
 
-function Text({ text, color, size, font, justifyContent, sx }: TextProps) {
+function Text({ text, color, size, sx }: TextProps) {
+    let fontFamily = 'Raleway';
+    let fontSize = '36px';
+
+    if (size) {
+        switch (size) {
+          case Size.small:
+            fontFamily = 'Raleway Small';
+            fontSize = '16px';
+            break;
+          case Size.medium:
+            fontFamily = 'Raleway Medium';
+            fontSize = '24px';
+            break;
+          case Size.large:
+            fontFamily = 'Raleway Large';
+            fontSize = '36px';
+            break;
+          default:
+            fontFamily = 'Raleway';
+        }
+      }
 
     return (
         <Typography
-            color={customTheme.palette.custom.black}
+            color={customTheme.palette.custom.white}
             sx={{
                 color: color,
-                fontFamily: font ? 'sans-serif' : 'CustomCategoryFont, sans-serif',
-                fontSize: size ? size : 40,
-                marginLeft: justifyContent === 'left' ? '0' : 'auto',
-                marginRight: justifyContent === 'right' ? '0' : 'auto',
+                fontFamily: fontFamily,
+                fontSize: fontSize,
                 ...sx,
             }}
         >

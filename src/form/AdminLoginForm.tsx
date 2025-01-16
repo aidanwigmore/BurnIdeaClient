@@ -8,7 +8,7 @@ import Save from '@mui/icons-material/CheckOutlined';
 import Snackbar from '@mui/material/Snackbar';
 import TextField from '@mui/material/TextField';
 
-import CustomInput from '@materials/CustomInput';
+import CustomInput from '@materials/SearchInput';
 import FormButtonGroup from '@materials/FormButtonGroup';
 
 import customTheme from '../theme';
@@ -77,7 +77,32 @@ function AdminLoginForm({ handleNavigation }: AdminLoginFormProps) {
                     justifyContent: 'space-around',
                 }}
             >
-                <CustomInput id={0} text={"Email"} value={email} onChange={handleEmailChange} error={""} />
+                <TextField
+                    id={`0`}
+                    label={"Email"}
+                    value={email}
+                    onChange={handleEmailChange}
+                    type={'email'}
+                    margin="normal"
+                    error={errors.email !== ''}
+                    variant="outlined"
+                    InputLabelProps={{
+                        sx: {
+                            fontFamily: 'CustomCategoryFont, sans-serif',
+                            color: customTheme.palette.secondary.main,
+                            backgroundColor: customTheme.palette.custom.white,
+                            fontSize: 18,
+                        }
+                    }}
+                    sx={{
+                        width: '45%',
+                        border: '2px solid',
+                        borderColor: customTheme.palette.secondary.main,
+                        borderRadius: '10px',
+                        marginTop: '10px',
+                        marginBottom: '10px',
+                    }}
+                />   
             </Box>
             <Box
                 sx={{

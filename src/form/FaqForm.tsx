@@ -8,7 +8,7 @@ import Edit from '@mui/icons-material/Edit';
 import Garbage from '@mui/icons-material/Delete';
 import Save from '@mui/icons-material/CheckOutlined';
 
-import CustomInput from '@materials/CustomInput';
+import CustomInput from '@materials/SearchInput';
 import FormButtonGroup from '@materials/FormButtonGroup';
 
 import customTheme from '../theme';

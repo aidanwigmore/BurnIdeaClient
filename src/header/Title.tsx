@@ -1,8 +1,9 @@
 import React from 'react';
 
-import Typography from '@mui/material/Typography';
+import Text from '@materials/Text';
 
 import customTheme from '../theme';
+import { Size } from '../types/Size';
 
 interface TitleProps {
   title: string;
@@ -10,15 +11,7 @@ interface TitleProps {
 
 function Title({ title }: TitleProps) {
   return (
-    <Typography
-      sx={{
-        color: customTheme.palette.info.main,
-        fontFamily: 'Raleway Large',
-        '-webkit-text-stroke': `2px ${customTheme.palette.info.light}`,
-      }}
-    >
-      {title}
-    </Typography>
+    <Text text={title} size={Size.large}/>
   );
 };
 

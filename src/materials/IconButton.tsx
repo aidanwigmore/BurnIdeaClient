@@ -1,9 +1,11 @@
 import React from 'react';
 
-import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 
+import Text from '@materials/Text';
+
 import customTheme from '../theme';
+import { Size } from '../types/Size';
 
 interface IconButtonProps {
     text: string;
@@ -31,16 +33,7 @@ function IconButton({ text, icon, color, open, onClick, backgroundColor }: IconB
             >
                 <div>{icon}</div>
                 <div>
-                    <Typography
-                        variant="h6"
-                        onClick={onClick}
-                        sx={{
-                            color: color,
-                            fontFamily: 'Oswald, Arial, sans-serif',
-                        }}
-                    >
-                        {text}
-                    </Typography>
+                    <Text size={Size.medium} text={text} />
                 </div>
             </Button>
         );
@@ -59,15 +52,7 @@ function IconButton({ text, icon, color, open, onClick, backgroundColor }: IconB
             >
                 <div>{icon}</div>
                 <div>
-                    <Typography
-                        sx={{
-                            color: customTheme.palette.custom.white,
-                            fontFamily: 'Oswald, Arial, sans-serif',
-                            fontSize: 12,
-                        }}
-                    >
-                        {text}
-                    </Typography>
+                    <Text size={Size.medium} text={text} />
                 </div>
             </Button>
         );

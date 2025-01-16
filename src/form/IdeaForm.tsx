@@ -8,13 +8,16 @@ import Edit from '@mui/icons-material/Edit';
 import Garbage from '@mui/icons-material/Delete';
 import Save from '@mui/icons-material/CheckOutlined';
 
-import CustomInput from '@materials/CustomInput';
+import Text from '@materials/Text';
+import RichTextEditor from '@materials/RichTextEditor';
+import CustomInput from '@materials/SearchInput';
 import FormButtonGroup from '@materials/FormButtonGroup';
 import Switch from '@mui/material/Switch';
 
 import customTheme from '../theme';
 
 import Idea from '../types/Idea';
+import { Size } from '../types/Size';
 
 interface IdeaFormProps {
     idea?: Idea | null;
@@ -90,10 +93,10 @@ function IdeaForm({ idea, handleResetIdea, handleCancel, setIdeas }: IdeaFormPro
         }
     };
 
-    const handleDescriptionChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const handleDescriptionChange = (value: string) => {
         setNewIdea(prevIdea => ({
             ...prevIdea,
-            ideaDescription: event.target.value
+            ideaDescription: value
         }));
     };
 
@@ -167,9 +170,26 @@ function IdeaForm({ idea, handleResetIdea, handleCancel, setIdeas }: IdeaFormPro
                     display: 'flex',
                     flexDirection: 'row',
                     justifyContent: 'space-around',
+                    width: '100%',
                 }}
             >
-                <CustomInput width={'80%'} id={3} text={newIdea.ideaDescription || (idea?.ideaDescription || "Description")} onChange={handleDescriptionChange} error={""} />
+                <Box
+                    sx={{
+                        width: '80%', 
+                        backgroundColor: customTheme.palette.primary.light,
+                        padding: '10px',
+                        borderRadius: '10px',
+                    }}
+                >
+                    <>
+                        <Text size={Size.medium} text={"Description"}/>
+                        <RichTextEditor 
+                            value={newIdea.ideaDescription || (idea?.ideaDescription || "Description")} 
+                            onChange={handleDescriptionChange}    
+                        />
+                    </>
+                </Box>
+                {/* <CustomInput width={'80%'} id={3} text={newIdea.ideaDescription || (idea?.ideaDescription || "Description")} onChange={handleDescriptionChange} error={""} /> */}
             </Box>
             <Box
                 sx={{

@@ -10,18 +10,19 @@ import Snackbar from '@mui/material/Snackbar';
 import TextField from '@mui/material/TextField';
 
 import CustomCheckBox from '@materials/CustomCheckBox';
-import CustomInput from '@materials/CustomInput';
+import CustomInput from '@materials/SearchInput';
 import FormButtonGroup from '@materials/FormButtonGroup';
 import Text from '@materials/Text';
 
 import customTheme from '../theme';
+import { Size } from '../types/Size';
 
 interface RegisterFormProps {
   handleNavigation: (url: string | undefined) => void;
 }
 
 function RegisterForm({ handleNavigation }: RegisterFormProps) {
-    const { register } = useAuth();
+  const { register } = useAuth();
   
   const [email, setEmail] = useState('');
   const [name, setName] = useState('');
@@ -196,7 +197,7 @@ function RegisterForm({ handleNavigation }: RegisterFormProps) {
           }}
         />
       </Box>
-      <Text sx={{ width: '99%', textAlign: 'center' }} size={15} text={"Password must be minimum 8 characters long, have 3 special characters and 3 numbers."} />
+      <Text sx={{ width: '99%', textAlign: 'center' }} size={Size.small} text={"Password must be minimum 8 characters long, have 3 special characters and 3 numbers."} />
       <Box
         sx={{
           display: 'flex',

@@ -1,9 +1,11 @@
 import React from 'react';
 
 import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
+
+import Text from '@materials/Text';
 
 import customTheme from '../theme';
+import { Size } from '../types/Size';
 
 interface IdeaBurnLogoProps {
     admin?: boolean;
@@ -16,20 +18,16 @@ function IdeaBurnLogo({ admin }: IdeaBurnLogoProps) {
             sx={{display: 'inline-flex', alignItems: 'center'}}
         >
             <img src="/logo.png" alt="IdeaBurn Logo" style={{width: '50px', height: '50px'}} />
-            <Typography
-                color={customTheme.palette.primary.main}
-                sx={{
-                    fontFamily: 'Raleway Large',
-                }}
-                >
-                {
+            <Text 
+                size={Size.large}
+                text={
                     admin && admin===true ? (
                         'IDEABURN - ADMIN'
                     ) : (
                         'IDEABURN'
                     )
                 }
-            </Typography>
+            />
         </Box>
     );
 };

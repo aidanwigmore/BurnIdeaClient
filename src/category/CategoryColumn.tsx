@@ -1,11 +1,9 @@
 import React from 'react';
 
 import Box from '@mui/material/Box';
-import { Button } from '@mui/material';
 import { Tooltip } from '@mui/material';
-import Typography from '@mui/material/Typography';
 
-import Edit from '@mui/icons-material/Edit';
+import Text from '@materials/Text';
 
 import CategoryButton from './CategoryButton';
 import IdeaImageCard from '@idea/IdeaImageCard';
@@ -14,6 +12,7 @@ import Category from '../types/Category';
 import Idea from '../types/Idea';
 
 import customTheme from '../theme';
+import { Size } from '../types/Size';
 
 interface CategoryColumnProps {
     renderHeader: boolean;
@@ -38,7 +37,7 @@ function CategoryColumn({ renderDescription, renderHeader, id, name, ideas, cate
                     <Box sx={{ display: 'flex', flexDirection: 'column', gap: '12px', backgroundColor: customTheme.palette.secondary.main, borderRadius: '15px', marginBottom: '12px', marginLeft: 'auto', marginRight: 'auto' }}>
                         <Box sx={{ display: 'flex', flexDirection: 'row', width: '100%', backgroundColor: customTheme.palette.secondary.main, borderRadius: '15px', gap: '12px', marginRight: 'auto', overflow: 'hidden', flexWrap: 'wrap', marginLeft: 'auto' }}>
                             <Box sx={{ padding: '12px', marginLeft: 'auto', marginRight: 'auto' }}>
-                                <Typography color={customTheme.palette.primary.main}>{category.categoryDescription}</Typography>
+                                <Text color={customTheme.palette.primary.main} sx={{ width: '99%', textAlign: 'center' }} size={Size.medium} text={category.categoryDescription} />
                             </Box>
                         </Box>
                     </Box>
@@ -61,7 +60,7 @@ function CategoryColumn({ renderDescription, renderHeader, id, name, ideas, cate
                             })}
                         </Box>
                     ) : (
-                        <Box>
+                        <Box sx={{width: {sm: '100%', xs: '90%'}}} >
                             {ideas && ideas.map((idea) => {
                                 if (idea.id !== undefined) {
                                     const ideaId = parseInt(idea.id, 10);

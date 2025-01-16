@@ -4,7 +4,6 @@ import axios from 'axios';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Divider from '@mui/material/Divider';
-import Typography from '@mui/material/Typography';
 
 import Cancel from '@mui/icons-material/Cancel';
 import Edit from '@mui/icons-material/Edit';
@@ -13,7 +12,8 @@ import Minus from '@mui/icons-material/Remove';
 import Plus from '@mui/icons-material/Add';
 import Save from '@mui/icons-material/CheckOutlined';
 
-import CustomInput from '@materials/CustomInput';
+import Text from '@materials/Text';
+import CustomInput from '@materials/SearchInput';
 import CustomSwitch from '@materials/CustomSwitch';
 import FormButtonGroup from '@materials/FormButtonGroup';
 import Switch from '@mui/material/Switch';
@@ -22,6 +22,8 @@ import customTheme from '../theme';
 
 import Category from '../types/Category';
 import Idea from '../types/Idea';
+
+import { Size } from '../types/Size';
 
 interface CategoryFormProps {
     category?: Category | null;
@@ -207,15 +209,10 @@ function CategoryForm({ category, ideas, setCategories, handleResetCategory, han
                     justifyContent: 'space-around',
                 }}
             >
-                <Typography
-                    sx={{
-                        color: customTheme.palette.custom.black,
-                        fontFamily: 'CustomCategoryFont, sans-serif',
-                        fontSize: 25,
-                    }}
-                >
-                    {"Color"}
-                </Typography>
+                <Text
+                    size={Size.small}
+                    text={"Colour"}
+                />
                 {/* <CustomInput width={'80%'} id={1} text={newCategory.color || (category?.color || "Color")} onChange={handleColorChange} error={""} /> */}
                 <input
                     type="color"
@@ -230,17 +227,10 @@ function CategoryForm({ category, ideas, setCategories, handleResetCategory, han
                     width: '50%',
                 }}
             >
-                <Typography
-                    sx={{
-                        color: customTheme.palette.custom.black,
-                        fontFamily: 'CustomCategoryFont, sans-serif',
-                        fontSize: 25,
-                        marginLeft: 'auto',
-                        marginRight: 'auto',
-                    }}
-                >
-                    {"Add / Remove Ideas"}
-                </Typography>
+                <Text
+                    size={Size.small}
+                    text={"Add / Remove Ideas"}
+                />
                 <Divider sx={{ borderBottomWidth: 2, marginBottom: '10px', borderColor: 'success' }} />
                 {
                     ideas?.map((idea) => {
@@ -255,7 +245,10 @@ function CategoryForm({ category, ideas, setCategories, handleResetCategory, han
                                                     display: 'flex', flexDirection: 'row'
                                                 }}
                                             >
-                                                <Typography key={`idea-${idea.id}`} variant="body1">{idea.id}-"{idea.name}"-${idea.ideaDifficulty}-{idea.visible}</Typography>
+                                                <Text
+                                                    size={Size.small}
+                                                    text={`${idea.id}-"${idea.name}"-${idea.ideaDifficulty}-${idea.visible}`}
+                                                />
                                             </Box>
                                             <Button id={`add-idea-button-${idea.id}`} color={"warning"} onClick={() => handleRemoveIdea(idea)}><Minus /></Button>
                                         </Box>
@@ -268,7 +261,10 @@ function CategoryForm({ category, ideas, setCategories, handleResetCategory, han
                                                     display: 'flex', flexDirection: 'row'
                                                 }}
                                             >
-                                                <Typography key={`idea-${idea.id}`} variant="body1">{idea.id}-"{idea.name}"-{idea.ideaDifficulty}-{idea.visible}</Typography>
+                                                <Text
+                                                    size={Size.small}
+                                                    text={`${idea.id}-"${idea.name}"-${idea.ideaDifficulty}-${idea.visible}`}
+                                                />
                                             </Box>
                                             <Button sx={{ justifyContent: 'flex-end' }} id={`remove-idea-button-${idea.id}`} color={"success"} onClick={() => handleAddIdea(idea)}><Plus /></Button>
                                         </Box>

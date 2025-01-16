@@ -4,6 +4,7 @@ import Divider from '@mui/material/Divider';
 import Input from '@mui/material/Input';
 import { Box, TextField, Switch, FormControlLabel, Button, Collapse, InputBase } from '@mui/material';
 
+import SearchInput from '@materials/SearchInput';
 import FilterDivider from '@materials/FilterDivider';
 import FilterSwitch from '@materials/FilterSwitch';
 
@@ -53,23 +54,18 @@ function Filters({
             <Button onClick={handleExpand}>
                 {expanded ? 'Collapse Filters' : 'Expand Filters'}
             </Button>
-            <InputBase
-                sx={{
-                    borderRadius: '10px',
-                    backgroundColor: customTheme.palette.info.main,
-                    color: customTheme.palette.secondary.main,
-                    padding: '10px',
-                }}
+            <SearchInput
                 inputProps={{
                     style: {
                         margin: '0 10px',
                     },
                 }}
-                id={'0'}
-                placeholder='Search'
+                id={0}
+                text={'Search'}
                 value={searchQuery}
-                onChange={handleSearchInputChange}
-            />
+                error=""
+                onChange={handleSearchInputChange || (() => {})}
+                />
             <Collapse in={expanded} timeout="auto" unmountOnExit>
                 <Box sx={{
                     display: 'inline-flex',

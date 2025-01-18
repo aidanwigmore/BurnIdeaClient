@@ -51,9 +51,6 @@ function Filters({
             marginBottom: '12px',
             flexWrap: 'wrap',
           }}>
-            <Button onClick={handleExpand}>
-                {expanded ? 'Collapse Filters' : 'Expand Filters'}
-            </Button>
             <SearchInput
                 inputProps={{
                     style: {
@@ -66,6 +63,9 @@ function Filters({
                 error=""
                 onChange={handleSearchInputChange || (() => {})}
                 />
+            <Button onClick={handleExpand}>
+                {expanded ? 'Collapse Filters' : 'Expand Filters'}
+            </Button>
             <Collapse in={expanded} timeout="auto" unmountOnExit>
                 <Box sx={{
                     display: 'inline-flex',

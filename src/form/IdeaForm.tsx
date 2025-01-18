@@ -183,13 +183,10 @@ function IdeaForm({ idea, handleResetIdea, handleCancel, setIdeas }: IdeaFormPro
                 >
                     <>
                         <Text size={Size.medium} text={"Description"}/>
-                        <RichTextEditor 
-                            value={newIdea.ideaDescription || (idea?.ideaDescription || "Description")} 
-                            onChange={handleDescriptionChange}    
+                        <RichTextEditor value={newIdea.ideaDescription || (idea?.ideaDescription || '')} onChange={handleDescriptionChange}
                         />
                     </>
                 </Box>
-                {/* <CustomInput width={'80%'} id={3} text={newIdea.ideaDescription || (idea?.ideaDescription || "Description")} onChange={handleDescriptionChange} error={""} /> */}
             </Box>
             <Box
                 sx={{

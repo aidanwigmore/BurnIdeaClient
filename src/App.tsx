@@ -4,7 +4,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import './App.css';
 
 import { AuthProvider } from '@context/AuthContext';
-
+import { MantineProvider } from '@mantine/core';
 import { ThemeProvider } from '@mui/material/styles';
 
 import AdminHomePage from '@pages/AdminHomePage';
@@ -17,19 +17,21 @@ import customTheme from './theme';
 
 function App() {
   return (
-    <ThemeProvider theme={customTheme}>
-      <AuthProvider>
-        <Router>
-          <Routes>
-            <Route path="/" element={<CustomerHomePage />} />
-            <Route path="/admin" element={<AdminHomePage />} />
-            <Route path="/ideas/:id" element={<CustomerIdeaPage />} />
-            <Route path="/faq" element={<FAQPage />} />
-            <Route path="/about-us" element={<AboutUsPage />} />
-          </Routes>
-        </Router>
-      </AuthProvider>
-    </ThemeProvider>
+    <MantineProvider>
+      <ThemeProvider theme={customTheme}>
+        <AuthProvider>
+          <Router>
+            <Routes>
+              <Route path="/" element={<CustomerHomePage />} />
+              <Route path="/admin" element={<AdminHomePage />} />
+              <Route path="/ideas/:id" element={<CustomerIdeaPage />} />
+              <Route path="/faq" element={<FAQPage />} />
+              <Route path="/about-us" element={<AboutUsPage />} />
+            </Routes>
+          </Router>
+        </AuthProvider>
+      </ThemeProvider>
+    </MantineProvider>
   )
 }
 

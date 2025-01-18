@@ -1,65 +1,75 @@
-import React, { useMemo, useState, useCallback } from 'react';
-import { createEditor, Descendant, Element as SlateElement, Text as SlateText } from 'slate';
-import { Slate, Editable, withReact, RenderLeafProps } from 'slate-react';
-import { withHistory } from 'slate-history';
-import Toolbar from './Toolbar';
+import React from 'react';
+import { useEditor, EditorContent } from '@tiptap/react';
+import { RichTextEditor as MantineRichTextEditor } from '@mantine/tiptap';
+import Highlight from '@tiptap/extension-highlight';
+import StarterKit from '@tiptap/starter-kit';
+import Underline from '@tiptap/extension-underline';
+import TextAlign from '@tiptap/extension-text-align';
+import Superscript from '@tiptap/extension-superscript';
+import SubScript from '@tiptap/extension-subscript';
+import '@mantine/tiptap/styles.css';
 
 interface RichTextEditorProps {
-  value: string;
-  onChange: (value: string) => void;
+    value: string;
+    onChange: (value: string) => void;
 }
 
-type CustomElement = { type: 'paragraph'; children: CustomText[] };
-type CustomText = { text: string; bold?: boolean; italic?: boolean; underline?: boolean };
-
 const RichTextEditor: React.FC<RichTextEditorProps> = ({ value, onChange }) => {
-  const editor = useMemo(() => withHistory(withReact(createEditor())), []);
-  const [editorValue, setEditorValue] = useState<CustomElement[]>([
-    {
-      type: 'paragraph',
-      children: [{ text: value }],
-    },
-  ]);
+    const editor = useEditor({
+        extensions: [
+            StarterKit,
+            Highlight,
+            Underline,
+            TextAlign.configure({ types: ['heading', 'paragraph'] }),
+            Superscript,
+            SubScript,
+        ],
+        content: value,
+        onUpdate: ({ editor }) => {
+            onChange(editor.getHTML());
+        },
+    });
 
-  const handleChange = (newValue: Descendant[]) => {
-    setEditorValue(newValue as CustomElement[]);
-    const textContent = newValue.map(n => {
-      if (SlateText.isText(n)) {
-        return n.text;
-      } else if (SlateElement.isElement(n)) {
-        return n.children.map(c => SlateText.isText(c) ? c.text : '').join('');
-      }
-      return '';
-    }).join('\n');
-    onChange(textContent);
-  };
+    return (
+        <MantineRichTextEditor editor={editor}>
+            <MantineRichTextEditor.Toolbar sticky stickyOffset={60}>
+                <MantineRichTextEditor.ControlsGroup>
+                    <MantineRichTextEditor.Bold />
+                    <MantineRichTextEditor.Italic />
+                    <MantineRichTextEditor.Underline />
+                    <MantineRichTextEditor.Strikethrough />
+                    <MantineRichTextEditor.ClearFormatting />
+                    <MantineRichTextEditor.Highlight />
+                    <MantineRichTextEditor.Code />
+                </MantineRichTextEditor.ControlsGroup>
 
-  const renderLeaf = useCallback((props: RenderLeafProps) => {
-    return <Leaf {...props} />;
-  }, []);
+                <MantineRichTextEditor.ControlsGroup>
+                    <MantineRichTextEditor.H1 />
+                    <MantineRichTextEditor.H2 />
+                    <MantineRichTextEditor.H3 />
+                    <MantineRichTextEditor.H4 />
+                    <MantineRichTextEditor.H5 />
+                    <MantineRichTextEditor.H6 />
+                </MantineRichTextEditor.ControlsGroup>
 
-  return (
-    <Slate editor={editor} initialValue={editorValue} onChange={handleChange}>
-      <Toolbar />
-      <Editable renderLeaf={renderLeaf} />
-    </Slate>
-  );
-};
+                <MantineRichTextEditor.ControlsGroup>
+                    <MantineRichTextEditor.Blockquote />
+                    <MantineRichTextEditor.BulletList />
+                    <MantineRichTextEditor.OrderedList />
+                    <MantineRichTextEditor.Subscript />
+                    <MantineRichTextEditor.Superscript />
+                </MantineRichTextEditor.ControlsGroup>
 
-const Leaf = ({ attributes, children, leaf }: any) => {
-  if (leaf.bold) {
-    children = <strong>{children}</strong>;
-  }
-
-  if (leaf.italic) {
-    children = <em>{children}</em>;
-  }
-
-  if (leaf.underline) {
-    children = <u>{children}</u>;
-  }
-
-  return <span {...attributes}>{children}</span>;
+                <MantineRichTextEditor.ControlsGroup>
+                    <MantineRichTextEditor.AlignLeft />
+                    <MantineRichTextEditor.AlignCenter />
+                    <MantineRichTextEditor.AlignRight />
+                    <MantineRichTextEditor.AlignJustify />
+                </MantineRichTextEditor.ControlsGroup>
+            </MantineRichTextEditor.Toolbar>
+            <EditorContent editor={editor} />
+        </MantineRichTextEditor>
+    );
 };
 
 export default RichTextEditor;

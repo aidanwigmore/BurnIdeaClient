@@ -1,6 +1,8 @@
 import React, { useState, useCallback } from 'react';
 import axios from 'axios';
 
+import DOMPurify from 'dompurify';
+
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Card from '@mui/material/Card';
@@ -83,8 +85,8 @@ function AdminIdeaModal({ idea, ideas, setIdea, setIdeas, handleResetIdea, handl
             <img src={idea.image} alt={idea.name} style={{ width: "50px", height: "50px" }} />,
             <b>{idea.ideaDifficulty}</b>,
             idea.visible.toString(),
-            <div style={{ maxWidth: '100px' }}>
-                {idea.ideaDescription}
+            <div style={{ maxWidth: '100px', maxHeight: '100px', overflow: 'auto' }}>
+                <div dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(idea?.ideaDescription || '') }} />
             </div>,
         ],
         actions: (
@@ -152,7 +154,7 @@ function AdminIdeaModal({ idea, ideas, setIdea, setIdeas, handleResetIdea, handl
                 />
             </Box>
             <CustomTable
-                columns={["ID", "name", "image", "visible", "description", "actions"]}
+                columns={["ID", "name", "image", "difficulty", "visible", "description", "actions"]}
                 data={transformedIdeas ?? []}
             />
         </Card>

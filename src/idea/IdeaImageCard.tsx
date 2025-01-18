@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import DOMPurify from 'dompurify';
 
 import Alert from '@mui/material/Alert';
 import Bookmark from '@mui/icons-material/Bookmark';
@@ -79,6 +80,8 @@ function IdeaImageCard({ idea, category, renderDescription }: IdeaImageCardProps
     const [snackbarOpen, setSnackbarOpen] = useState(false);
     const [snackbarMessage, setSnackbarMessage] = useState('');
     const [severity, setSeverity] = useState<"error" | "success" | "info" | "warning">('error');
+
+    const sanitizedDescription = DOMPurify.sanitize(idea?.ideaDescription || '');
 
     const handleClick = useCallback(() => {
         console.log('navigating to idea');
@@ -159,7 +162,7 @@ function IdeaImageCard({ idea, category, renderDescription }: IdeaImageCardProps
                             padding: '12px',
                         }}
                     >
-                        <Text size={Size.medium} text={idea?.ideaDescription ?? ''}/>
+                        <div dangerouslySetInnerHTML={{ __html: sanitizedDescription }} />
                     </Box>
                 )}
             </Box>

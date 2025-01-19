@@ -8,7 +8,7 @@ import Save from '@mui/icons-material/CheckOutlined';
 import Snackbar from '@mui/material/Snackbar';
 import TextField from '@mui/material/TextField';
 
-import CustomInput from '@materials/SearchInput';
+import CustomInput from '@materials/CustomInput';
 import FormButtonGroup from '@materials/FormButtonGroup';
 
 import customTheme from '../theme';
@@ -77,32 +77,12 @@ function AdminLoginForm({ handleNavigation }: AdminLoginFormProps) {
                     justifyContent: 'space-around',
                 }}
             >
-                <TextField
-                    id={`0`}
+                <CustomInput
                     label={"Email"}
                     value={email}
                     onChange={handleEmailChange}
-                    type={'email'}
-                    margin="normal"
-                    error={errors.email !== ''}
-                    variant="outlined"
-                    InputLabelProps={{
-                        sx: {
-                            fontFamily: 'CustomCategoryFont, sans-serif',
-                            color: customTheme.palette.secondary.main,
-                            backgroundColor: customTheme.palette.custom.white,
-                            fontSize: 18,
-                        }
-                    }}
-                    sx={{
-                        width: '45%',
-                        border: '2px solid',
-                        borderColor: customTheme.palette.secondary.main,
-                        borderRadius: '10px',
-                        marginTop: '10px',
-                        marginBottom: '10px',
-                    }}
-                />   
+                    error={errors.email}
+                />
             </Box>
             <Box
                 sx={{
@@ -111,32 +91,14 @@ function AdminLoginForm({ handleNavigation }: AdminLoginFormProps) {
                     justifyContent: 'space-around',
                 }}
             >
-                <TextField
-                    id={`1`}
+                <CustomInput
                     label={"Password"}
                     value={password}
+                    type={"password"}
                     onChange={handlePasswordChange}
-                    type={'password'}
-                    margin="normal"
-                    error={errors.password !== ''}
-                    variant="outlined"
-                    InputLabelProps={{
-                        sx: {
-                            fontFamily: 'CustomCategoryFont, sans-serif',
-                            color: customTheme.palette.secondary.main,
-                            backgroundColor: customTheme.palette.custom.white,
-                            fontSize: 18,
-                        }
-                    }}
-                    sx={{
-                        width: '45%',
-                        border: '2px solid',
-                        borderColor: customTheme.palette.secondary.main,
-                        borderRadius: '10px',
-                        marginTop: '10px',
-                        marginBottom: '10px',
-                    }}
-                />            </Box>
+                    error={errors.password}
+                />    
+            </Box>
             <FormButtonGroup
                 texts={[
                     'Login',

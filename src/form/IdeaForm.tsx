@@ -5,12 +5,11 @@ import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
 import Cancel from '@mui/icons-material/Cancel';
 import Edit from '@mui/icons-material/Edit';
-import Garbage from '@mui/icons-material/Delete';
 import Save from '@mui/icons-material/CheckOutlined';
 
 import Text from '@materials/Text';
 import RichTextEditor from '@materials/RichTextEditor';
-import CustomInput from '@materials/SearchInput';
+import CustomInput from '@materials/CustomInput';
 import FormButtonGroup from '@materials/FormButtonGroup';
 import Switch from '@mui/material/Switch';
 
@@ -152,7 +151,7 @@ function IdeaForm({ idea, handleResetIdea, handleCancel, setIdeas }: IdeaFormPro
                     justifyContent: 'space-around',
                 }}
             >
-                <CustomInput id={0} text={"Name"} value={newIdea.name || idea?.name} onChange={handleNameChange} error={""} />
+                <CustomInput label={"Name"} value={newIdea.name || idea?.name || ''} onChange={handleNameChange} error={""} />
                 <Switch checked={newIdea.visible} onChange={handleVisibleChange} />
             </Box>
             <Box
@@ -162,7 +161,7 @@ function IdeaForm({ idea, handleResetIdea, handleCancel, setIdeas }: IdeaFormPro
                     justifyContent: 'space-around',
                 }}
             >
-                <CustomInput id={1} text={"Difficulty"} value={newIdea?.ideaDifficulty + "" || idea?.ideaDifficulty + ''} onChange={handleDifficultyChange} error={""} />
+                <CustomInput label={"Difficulty"} value={newIdea?.ideaDifficulty + "" || idea?.ideaDifficulty + ''} onChange={handleDifficultyChange} error={""} />
             </Box>
             <Box
                 sx={{

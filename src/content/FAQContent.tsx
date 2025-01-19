@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import DOMPurify from 'dompurify';
 
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
@@ -21,7 +22,8 @@ interface FAQContentProps {
     faqs: FAQ[] | null;
 }
 
-function FAQContent({ faqs }: FAQContentProps) {
+function FAQContent({ faqs }: FAQContentProps) {    
+
     const [expandedQuestion, setExpandedQuestion] = useState<number | null>(null);
 
     const [searchQuery, setSearchQuery] = useState('');
@@ -79,12 +81,13 @@ function FAQContent({ faqs }: FAQContentProps) {
                                     }}
                                 >
                                     <Button sx={{ color: 'secondary.main', fontSize: '12px', display: 'flex', flexDirection: 'row' }} onClick={() => handleToggleQuestion(index)} startIcon={<ExpandIcon sx={{ width: '36px', height: '36px' }} />}>
-                                        <Text sx={{ width: '99%', textAlign: 'center' }} size={Size.medium} text={`${faq.question}?`} />
+                                        <div dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(faq.question || '') }} />
+                                        {/* <Text sx={{ width: '99%', textAlign: 'center' }} size={Size.medium} text={`${faq.question}?`} /> */}
                                     </Button>
                                     {expandedQuestion === index && (
                                         <>
-                                            <Text sx={{ width: '99%', textAlign: 'center' }} size={Size.medium} text={`${faq.answer}`} />
-                                            <img src={faq.image} alt={faq.question} />
+                                        <div dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(faq.answer || '') }} />
+                                        <img src={faq.image} alt={"Faq image"} />
                                         </>
                                     )}
                                 </ListItem>

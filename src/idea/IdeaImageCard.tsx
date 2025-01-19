@@ -13,6 +13,7 @@ import Snackbar from '@mui/material/Snackbar';
 import ShoppingCart from '@mui/icons-material/ShoppingCart';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
+import RatingComponent from '@mui/material/Rating';
 
 import Text from '@materials/Text';
 
@@ -145,7 +146,17 @@ function IdeaImageCard({ idea, category, renderDescription }: IdeaImageCardProps
                         alignItems: 'center',
                     }}
                 >
-                    <Text size={Size.medium} text={'Difficulty: ' + idea?.ideaDifficulty + ''}/>
+                    <Box sx={{display: 'inline-flex', flexDirection: 'row', justifyContent: 'left', alignItems: 'center'}}>
+                        <Text size={Size.medium} text={'Difficulty: '}/>
+                        <RatingComponent
+                            name="rating"
+                            value={idea?.ideaDifficulty}
+                            onChange={() => { }}
+                            size="large"
+                            readOnly={true}
+                            sx={{marginLeft: '0'}}
+                        />
+                    </Box>
                     <Text size={Size.medium} text={`Created: ${ idea && idea.dateCreated && formatDate(idea.dateCreated.toString()) }`}/>
                 </Box>
                 <Tooltip title="Navigate to Idea page?" arrow>

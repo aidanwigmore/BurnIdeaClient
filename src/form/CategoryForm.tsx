@@ -4,19 +4,19 @@ import axios from 'axios';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Divider from '@mui/material/Divider';
+import Switch from '@mui/material/Switch';
 
 import Cancel from '@mui/icons-material/Cancel';
 import Edit from '@mui/icons-material/Edit';
-import Garbage from '@mui/icons-material/Delete';
 import Minus from '@mui/icons-material/Remove';
 import Plus from '@mui/icons-material/Add';
 import Save from '@mui/icons-material/CheckOutlined';
 
 import Text from '@materials/Text';
-import CustomInput from '@materials/SearchInput';
-import CustomSwitch from '@materials/CustomSwitch';
+import CustomInput from '@materials/CustomInput';
 import FormButtonGroup from '@materials/FormButtonGroup';
-import Switch from '@mui/material/Switch';
+
+import RichTextEditor from '@materials/RichTextEditor';
 
 import customTheme from '../theme';
 
@@ -70,10 +70,10 @@ function CategoryForm({ category, ideas, setCategories, handleResetCategory, han
         }));
     };
 
-    const handleDescriptionChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const handleDescriptionChange = (value: string) => {
         setNewCategory(prevCategory => ({
             ...prevCategory,
-            categoryDescription: event.target.value
+            categoryDescription: value
         }));
     };
 
@@ -93,25 +93,6 @@ function CategoryForm({ category, ideas, setCategories, handleResetCategory, han
             }));
         }
     };
-
-    // const handleSortChange = useCallback(() => {
-    //     setSortNew(!sortNew);
-    //     if (sortNew) {
-    //         products?.sort((a, b) => {
-    //             if (a.id && b.id) {
-    //                 return parseInt(b.id, 10) - parseInt(a.id, 10);
-    //             }
-    //             return 0;
-    //         });
-    //     } else {
-    //         products?.sort((a, b) => {
-    //             if (a.id && b.id) {
-    //                 return parseInt(a.id, 10) - parseInt(b.id, 10);
-    //             }
-    //             return 0;
-    //         });
-    //     }
-    // }, [sortNew, products]);
 
     const handleAddIdea = (idea: Idea) => {
         if (idea.id) {
@@ -188,7 +169,7 @@ function CategoryForm({ category, ideas, setCategories, handleResetCategory, han
                     justifyContent: 'space-around',
                 }}
             >
-                <CustomInput id={0} text={"Name"} value={newCategory.name || category?.name} onChange={handleNameChange} error={""} />
+                <CustomInput label={"Name"} value={newCategory.name || category?.name || ''} onChange={handleNameChange} error={""} />
                 <Switch checked={newCategory.visible} onChange={handleVisibleChange} />
             </Box>
             <Box
@@ -197,9 +178,23 @@ function CategoryForm({ category, ideas, setCategories, handleResetCategory, han
                     display: 'flex',
                     flexDirection: 'row',
                     justifyContent: 'space-around',
+                    width: '100%',
                 }}
             >
-                <CustomInput width={'80%'} id={1} text={newCategory.categoryDescription || (category?.categoryDescription || "Description")} onChange={handleDescriptionChange} error={""} />
+                <Box
+                    sx={{
+                        width: '80%', 
+                        backgroundColor: customTheme.palette.primary.light,
+                        padding: '10px',
+                        borderRadius: '10px',
+                    }}
+                >
+                    <>
+                        <Text size={Size.medium} text={"Description"}/>
+                        <RichTextEditor value={newCategory.categoryDescription || (category?.categoryDescription || '')} onChange={handleDescriptionChange}
+                        />
+                    </>
+                </Box>
             </Box>
             <Box
                 sx={{

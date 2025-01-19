@@ -5,15 +5,17 @@ import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
 import Cancel from '@mui/icons-material/Cancel';
 import Edit from '@mui/icons-material/Edit';
-import Garbage from '@mui/icons-material/Delete';
 import Save from '@mui/icons-material/CheckOutlined';
 
-import CustomInput from '@materials/SearchInput';
+import Text from '@materials/Text';
+import RichTextEditor from '@materials/RichTextEditor';
+import CustomInput from '@materials/CustomInput';
 import FormButtonGroup from '@materials/FormButtonGroup';
 
 import customTheme from '../theme';
 
 import FAQ from '../types/FAQ';
+import { Size } from '../types/Size';
 
 interface FaqFormProps {
     faq?: FAQ | null;
@@ -54,17 +56,17 @@ function FaqForm({ faq, handleResetFaq, handleCancel, setFaqs }: FaqFormProps) {
         setEdit(!edit);
     }, [setEdit, edit]);
 
-    const handleQuestionChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const handleQuestionChange = (value: string) => {
         setNewFaq(prevFaq => ({
             ...prevFaq,
-            question: event.target.value
+            question: value
         }));
     };
 
-    const handleAnswerChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const handleAnswerChange = (value: string) => {
         setNewFaq(prevFaq => ({
             ...prevFaq,
-            answer: event.target.value
+            answer: value
         }));
     };
 
@@ -124,21 +126,30 @@ function FaqForm({ faq, handleResetFaq, handleCancel, setFaqs }: FaqFormProps) {
         <>
             <Box
                 sx={{
-                    display: 'flex',
-                    flexDirection: 'row',
-                    justifyContent: 'space-around',
+                    width: '80%', 
+                    backgroundColor: customTheme.palette.primary.light,
+                    padding: '10px',
+                    borderRadius: '10px',
+                    marginLeft: 'auto',
+                    marginRight: 'auto',
+                    marginBottom: '12px',
                 }}
             >
-                <CustomInput id={0} text={"Question"} value={newFaq.question || faq?.question} onChange={handleQuestionChange} error={""} />
+                <Text size={Size.medium} text={"Question"}/>
+                <RichTextEditor value={newFaq.question || (faq?.question || '')} onChange={handleQuestionChange}/>
             </Box>
             <Box
                 sx={{
-                    display: 'flex',
-                    flexDirection: 'row',
-                    justifyContent: 'space-around',
+                    width: '80%', 
+                    backgroundColor: customTheme.palette.primary.light,
+                    padding: '10px',
+                    borderRadius: '10px',
+                    marginLeft: 'auto',
+                    marginRight: 'auto',
                 }}
             >
-                <CustomInput id={1} text={"Answer"} value={newFaq?.answer + "" || newFaq?.answer + ''} onChange={handleAnswerChange} error={""} />
+                <Text size={Size.medium} text={"Answer"}/>
+                <RichTextEditor value={newFaq.answer || (faq?.answer || '')} onChange={handleAnswerChange}/>
             </Box>
             <Box
                 sx={{

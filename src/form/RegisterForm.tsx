@@ -7,10 +7,9 @@ import Box from '@mui/material/Box';
 import Garbage from '@mui/icons-material/Delete';
 import Save from '@mui/icons-material/CheckOutlined';
 import Snackbar from '@mui/material/Snackbar';
-import TextField from '@mui/material/TextField';
 
 import CustomCheckBox from '@materials/CustomCheckBox';
-import CustomInput from '@materials/SearchInput';
+import CustomInput from '@materials/CustomInput';
 import FormButtonGroup from '@materials/FormButtonGroup';
 import Text from '@materials/Text';
 
@@ -125,8 +124,8 @@ function RegisterForm({ handleNavigation }: RegisterFormProps) {
           justifyContent: 'space-around',
         }}
       >
-        <CustomInput id={1} text={"Name"} value={name} onChange={handleNameChange} error={errors.name} />
-        <CustomInput id={2} text={"Given Name"} value={givenName} onChange={handleGivenNameChange} error={errors.givenName} />
+        <CustomInput label={"Name"} value={name} onChange={handleNameChange} error={errors.name} />
+        <CustomInput label={"Given Name"} value={givenName} onChange={handleGivenNameChange} error={errors.givenName} />
       </Box>
       <Box
         sx={{
@@ -135,8 +134,8 @@ function RegisterForm({ handleNavigation }: RegisterFormProps) {
           justifyContent: 'space-around',
         }}
       >
-        <CustomInput id={0} text={"Email"} value={email} onChange={handleEmailChange} error={errors.email} />
-        <CustomInput id={1} text={"Phone Number"} value={phoneNumber} onChange={handlePhoneNumberChange} error={errors.phoneNumber} />
+        <CustomInput label={"Email"} value={email} onChange={handleEmailChange} error={errors.email} />
+        <CustomInput label={"Phone Number"} value={phoneNumber} onChange={handlePhoneNumberChange} error={errors.phoneNumber} />
       </Box>
       <Box
         sx={{
@@ -145,57 +144,20 @@ function RegisterForm({ handleNavigation }: RegisterFormProps) {
           justifyContent: 'space-around',
         }}
       >
-        <TextField
-          id={`2`}
-          label={"Password"}
-          value={password}
-          onChange={handlePasswordChange}
-          type={'password'}
-          margin="normal"
-          variant="outlined"
-          InputLabelProps={{
-            sx: {
-              fontFamily: 'CustomCategoryFont, sans-serif',
-              color: customTheme.palette.secondary.main,
-              backgroundColor: customTheme.palette.custom.white,
-              fontSize: 18,
-            }
-          }}
-          sx={{
-            width: '45%',
-            border: '2px solid',
-            borderColor: customTheme.palette.secondary.main,
-            borderRadius: '10px',
-            marginTop: '10px',
-            marginBottom: '10px',
-          }}
-        />
-        <TextField
-          id={`3`}
-          label={"Confirm Password"}
-          value={confirmPassword}
-          onChange={handleConfirmPasswordChange}
-          error={errors.confirmPassword !== ''}
-          type={'password'}
-          margin="normal"
-          variant="outlined"
-          InputLabelProps={{
-            sx: {
-              fontFamily: 'CustomCategoryFont, sans-serif',
-              color: customTheme.palette.secondary.main,
-              backgroundColor: customTheme.palette.custom.white,
-              fontSize: 18,
-            }
-          }}
-          sx={{
-            width: '45%',
-            border: '2px solid',
-            borderColor: customTheme.palette.secondary.main,
-            borderRadius: '10px',
-            marginTop: '10px',
-            marginBottom: '10px',
-          }}
-        />
+        <CustomInput
+            label={"Password"}
+            value={password}
+            type={"password"}
+            onChange={handlePasswordChange}
+            error={''}
+        />   
+        <CustomInput
+            label={"Confirm Password"}
+            value={confirmPassword}
+            type={"password"}
+            onChange={handleConfirmPasswordChange}
+            error={errors.confirmPassword}
+        />   
       </Box>
       <Text sx={{ width: '99%', textAlign: 'center' }} size={Size.small} text={"Password must be minimum 8 characters long, have 3 special characters and 3 numbers."} />
       <Box

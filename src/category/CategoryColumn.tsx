@@ -1,4 +1,5 @@
 import React from 'react';
+import DOMPurify from 'dompurify';
 
 import Box from '@mui/material/Box';
 import { Tooltip } from '@mui/material';
@@ -37,7 +38,7 @@ function CategoryColumn({ renderDescription, renderHeader, id, name, ideas, cate
                     <Box sx={{ display: 'flex', flexDirection: 'column', gap: '12px', backgroundColor: customTheme.palette.secondary.main, borderRadius: '15px', marginBottom: '12px', marginLeft: 'auto', marginRight: 'auto' }}>
                         <Box sx={{ display: 'flex', flexDirection: 'row', width: '100%', backgroundColor: customTheme.palette.secondary.main, borderRadius: '15px', gap: '12px', marginRight: 'auto', overflow: 'hidden', flexWrap: 'wrap', marginLeft: 'auto' }}>
                             <Box sx={{ padding: '12px', marginLeft: 'auto', marginRight: 'auto' }}>
-                                <Text color={customTheme.palette.primary.main} sx={{ width: '99%', textAlign: 'center' }} size={Size.medium} text={category.categoryDescription} />
+                                <div style={{color: 'white'}} dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(category?.categoryDescription || '') }} />
                             </Box>
                         </Box>
                     </Box>

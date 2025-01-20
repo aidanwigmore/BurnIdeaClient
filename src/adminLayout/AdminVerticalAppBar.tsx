@@ -20,8 +20,10 @@ import ShoppingCart from '@mui/icons-material/ShoppingCart';
 import Snackbar from '@mui/material/Snackbar';
 import Star from '@mui/icons-material/Star';
 import Question from '@mui/icons-material/QuestionAnswer';
+import RttIcon from '@mui/icons-material/Rtt';
 
 import Customer from '../types/Customer';
+import About from '../types/About';
 
 import customTheme from '../theme';
 
@@ -31,6 +33,7 @@ interface AdminVerticalAppBarProps {
   setCustomersModalOpen: () => void;
   setCategoryModalOpen: () => void;
   setIdeaModalOpen: () => void;
+  setAboutModalOpen: () => void;
 }
 
 function AdminVerticalAppBar({
@@ -39,6 +42,7 @@ function AdminVerticalAppBar({
   setCustomersModalOpen,
   setCategoryModalOpen,
   setIdeaModalOpen,
+  setAboutModalOpen,
 }: AdminVerticalAppBarProps) {
 
   const navigate = useNavigate();
@@ -58,6 +62,10 @@ function AdminVerticalAppBar({
   const handleFAQModalOpen = useCallback(() => {
     setFAQModalOpen();
   }, [setFAQModalOpen]);
+
+  const handleAboutModalOpen = useCallback(() => {
+    setAboutModalOpen();
+  }, [setAboutModalOpen]);
 
   const handleLoginModalOpen = useCallback(() => {
     setLoginModalOpen();
@@ -145,6 +153,10 @@ function AdminVerticalAppBar({
             <Question sx={{ width: '36px', height: '36px' }} />
             FAQ
           </Button>
+          <Button sx={{ color: 'white', fontSize: '12px', display: 'flex', flexDirection: 'column', paddingBottom: '10px', marginLeft: 'auto', marginRight: 'auto' }} onClick={handleAboutModalOpen}>
+            <RttIcon sx={{ width: '36px', height: '36px' }} />
+            Content
+          </Button>
         </>
       );
     } else {
@@ -162,6 +174,8 @@ function AdminVerticalAppBar({
     handleLoginModalOpen, handleLogout,
     handleIdeaModalOpen,
     handleCategoryModalOpen,
+    handleAboutModalOpen,
+    handleFAQModalOpen,
   ]);
 
   return (

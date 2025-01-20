@@ -9,10 +9,11 @@ import AdminCategoryModal from '@adminModals/AdminCategoryModal';
 import Footer from '@layout/Footer';
 import Header from '@header/Header';
 import AdminVerticalAppBar from '@adminLayout/AdminVerticalAppBar';
-import AdminHorizontalAppBar from '@adminLayout/AdminHorizontalAppBar';
+import HorizontalAppBar from '@layout/HorizontalAppBar';
 import AdminModalControl from '@customerModals/ModalOverLay';
 import AdminIdeaModal from '@adminModals/AdminIdeaModal';
 import AdminLoginModal from '@adminModals/AdminLoginModal';
+import AdminAboutModal from '@adminModals/AdminAboutModal';
 import FaqModal from '@adminModals/FaqModal';
 import Body from '@layout/Body';
 
@@ -20,6 +21,7 @@ import Category from '../types/Category';
 import Customer from '../types/Customer';
 import Idea from '../types/Idea';
 import FAQ from '../types/FAQ';
+import About from '../types/About';
 import customTheme from '../theme';
 
 interface AdminLayoutProps {
@@ -28,11 +30,13 @@ interface AdminLayoutProps {
     category: Category | null;
     idea: Idea | null;
     faq: FAQ | null;
+    about: About | null;
 
     categories: Category[] | null;
     customers: Customer[] | null;
     ideas: Idea[] | null;
     faqs: FAQ[] | null;
+    abouts: About[] | null;
 
     setCategories: (categories: Category[]) => void;
     setCategory: (category: Category) => void;
@@ -40,6 +44,8 @@ interface AdminLayoutProps {
     setIdeas: (ideas: Idea[]) => void;
     setFaq: (faq: FAQ) => void;
     setFaqs: (faqs: FAQ[]) => void;
+    setAbout: (about: About) => void;
+    setAbouts: (abouts: About[]) => void;
 
     faqModalOpen: boolean;
     adminLoginModalOpen: boolean;
@@ -47,6 +53,7 @@ interface AdminLayoutProps {
     ideaModalOpen: boolean;
     modalOverLayOpen: boolean;
     customersModalOpen: boolean;
+    aboutsModalOpen: boolean;
 
     handleFaqModalOpen: () => void;
     handleAdminLoginModalOpen: () => void;
@@ -57,6 +64,8 @@ interface AdminLayoutProps {
     handleResetCategory: () => void;
     handleResetFaq: () => void;
     handleResetIdea: () => void;
+    handleAboutModalOpen: () => void;
+    handleResetAbout: () => void;
 }
 
 function AdminLayout({
@@ -65,11 +74,13 @@ function AdminLayout({
     category,
     idea,
     faq,
+    about,
 
     categories,
     customers,
     ideas,
     faqs,
+    abouts,
 
     setFaq,
     setIdea,
@@ -77,6 +88,8 @@ function AdminLayout({
     setCategories,
     setIdeas,
     setFaqs,
+    setAbout,
+    setAbouts,
 
     faqModalOpen,
     adminLoginModalOpen,
@@ -84,6 +97,7 @@ function AdminLayout({
     customersModalOpen,
     modalOverLayOpen,
     ideaModalOpen,
+    aboutsModalOpen,
 
     handleFaqModalOpen,
     handleAdminLoginModalOpen,
@@ -92,8 +106,10 @@ function AdminLayout({
     handleResetIdea,
     handleResetCategory,
     handleResetFaq,
+    handleResetAbout,
     handleModalOverLayOpen,
     handleIdeaModalOpen,
+    handleAboutModalOpen,
 }: AdminLayoutProps) {
     const navigate = useNavigate();
 
@@ -148,16 +164,27 @@ function AdminLayout({
                     handleNavigation={handleFaqModalOpen}
                 />
             )
+        } else if (aboutsModalOpen) {
+            return (
+                <AdminAboutModal
+                    about={about ?? null}
+                    abouts={abouts ?? null}
+                    setAbout={() => setAbout}
+                    setAbouts={() => setAbouts}
+                    handleResetAbout={handleResetAbout}
+                    handleNavigation={handleAboutModalOpen}
+                />
+            )
         }
     }, [
-        customers, ideas, idea, category, categories,
+        customers, ideas, idea, category, categories, abouts, about,
         handleResetIdea, handleResetCategory, setCategory,
         setCategories, setIdeas, setIdea, setFaq, faq, 
         faqModalOpen,
         customersModalOpen,
-        ideaModalOpen,
+        ideaModalOpen, aboutsModalOpen,
         categoryModalOpen, adminLoginModalOpen,
-        handleCustomersModalOpen,
+        handleCustomersModalOpen, handleAboutModalOpen,
         handleIdeaModalOpen, handleCategoryModalOpen, handleAdminLoginModalOpen,
     ]);
 
@@ -208,10 +235,12 @@ function AdminLayout({
                         setCustomersModalOpen={handleCustomersModalOpen}
                         setCategoryModalOpen={handleCategoryModalOpen}
                         setIdeaModalOpen={handleIdeaModalOpen}
+                        setAboutModalOpen={handleAboutModalOpen}
                     />
                 </Box>
                 <Box sx={{ gridArea: 'horiSideBar' }}>
-                    <AdminHorizontalAppBar
+                    <HorizontalAppBar
+                        handleNavigateAboutUs={() => handleNavigation('/about-us')}
                         handleNavigateFAQ={() => handleNavigation('/faq')}
                     />
                 </Box>

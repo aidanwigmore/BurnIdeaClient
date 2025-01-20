@@ -10,6 +10,7 @@ import Category from '../types/Category';
 import Customer from '../types/Customer';
 import Idea from '../types/Idea';
 import FAQ from '../types/FAQ';
+import About from '../types/About';
 
 function AdminHomePage() {
 
@@ -17,9 +18,11 @@ function AdminHomePage() {
   const [ideas, setIdeas] = useState<Idea[] | null>(null);
   const [customers, setCustomers] = useState<Customer[] | null>(null);
   const [faqs, setFaqs] = useState<FAQ[] | null>(null);
+  const [abouts, setAbouts] = useState<About[] | null>(null);
 
   const [modalOverLayOpen, setModalOverLayOpen] = useState(false);
   const [faqModalOpen, setFaqModalOpen] = useState(false);
+  const [aboutModalOpen, setAboutModalOpen] = useState(false);
   const [customersModalOpen, setCustomersModalOpen] = useState(false);
   const [ideaModalOpen, setIdeaModalOpen] = useState(false);
   const [categoryModalOpen, setCategoryModalOpen] = useState(false);
@@ -28,6 +31,7 @@ function AdminHomePage() {
   const [category, setCategory] = useState<Category | null>(null);
   const [idea, setIdea] = useState<Idea | null>(null);
   const [faq, setFaq] = useState<FAQ | null>(null);
+  const [about, setAbout] = useState<About | null>(null);
 
   const handleModalOverLayOpen = useCallback(() => {
     if (modalOverLayOpen === true) {
@@ -50,9 +54,12 @@ function AdminHomePage() {
     if (adminLoginModalOpen === true) {
       setAdminLoginModalOpen(false);
     }
+    if (aboutModalOpen === true) {
+      setAboutModalOpen(false);
+    }
   }, [
-    customersModalOpen, ideaModalOpen, categoryModalOpen, modalOverLayOpen, adminLoginModalOpen, faqModalOpen,
-    setCustomersModalOpen, setIdeaModalOpen, setCategoryModalOpen, setAdminLoginModalOpen, setFaqModalOpen,
+    customersModalOpen, ideaModalOpen, categoryModalOpen, modalOverLayOpen, adminLoginModalOpen, faqModalOpen, aboutModalOpen,
+    setCustomersModalOpen, setIdeaModalOpen, setCategoryModalOpen, setAdminLoginModalOpen, setFaqModalOpen, setAboutModalOpen,
   ]);
 
   const handleSetIdea = useCallback((idea: Idea) => {
@@ -72,6 +79,10 @@ function AdminHomePage() {
   const handleResetFaq = useCallback(() => {
     setFaq(null);
   }, [setFaq]);
+
+  const handleResetAbout = useCallback(() => {
+    setAbout(null);
+  }, [setAbout]);
 
   useEffect(() => {
     axios.get(`${process.env.REACT_APP_API_BASE}/api/ideas/`,
@@ -94,6 +105,18 @@ function AdminHomePage() {
       })
       .catch(error => {
         console.error('Error fetching FAQ:', error);
+      });
+  }, []);
+
+  useEffect(() => {
+    axios.get(`${process.env.REACT_APP_API_BASE}/api/about/`,
+      { headers: { 'Authorization': `Token ${localStorage.getItem('token')}` } }
+    )
+      .then(response => {
+        setAbouts(response.data);
+      })
+      .catch(error => {
+        console.error('Error fetching About:', error);
       });
   }, []);
 
@@ -137,6 +160,11 @@ function AdminHomePage() {
     setFaqModalOpen(true);
   }, [handleModalOverLayOpen]);
 
+  const handleAboutModalOpen = useCallback(() => {
+    handleModalOverLayOpen();
+    setAboutModalOpen(true);
+  }, [handleModalOverLayOpen]);
+
   const handleAdminLoginModalOpen = useCallback(() => {
     handleModalOverLayOpen();
     setAdminLoginModalOpen(true);
@@ -156,6 +184,13 @@ function AdminHomePage() {
         faqModalOpen={faqModalOpen}
         handleFaqModalOpen={handleFaqModalOpen}
         handleResetFaq={handleResetFaq}
+        about={about}
+        abouts={abouts}
+        setAbout={setAbout}
+        setAbouts={setAbouts}
+        aboutsModalOpen={aboutModalOpen}
+        handleAboutModalOpen={handleAboutModalOpen}
+        handleResetAbout={handleResetAbout}
         category={category}
         categories={categories}
         setCategory={setCategory}

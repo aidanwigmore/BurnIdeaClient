@@ -1,18 +1,12 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import DOMPurify from 'dompurify';
 
 import Alert from '@mui/material/Alert';
-import Bookmark from '@mui/icons-material/Bookmark';
 import Box from '@mui/material/Box';
 import { Button, Tooltip } from '@mui/material';
 import Card from '@mui/material/Card';
-import Star from '@mui/icons-material/Star';
 import Snackbar from '@mui/material/Snackbar';
-import ShoppingCart from '@mui/icons-material/ShoppingCart';
-import Tabs from '@mui/material/Tabs';
-import Tab from '@mui/material/Tab';
 import RatingComponent from '@mui/material/Rating';
 
 import Text from '@materials/Text';
@@ -21,7 +15,6 @@ import customTheme from '../theme';
 
 import Category from '../types/Category';
 import Idea from '../types/Idea';
-
 import { Size } from '../types/Size';
 
 interface IdeaImageCardProps {

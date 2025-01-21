@@ -17,8 +17,6 @@ import Idea from '../types/Idea';
 
 import { Size } from '../types/Size';
 
-import customTheme from '../theme';
-
 interface AdminIdeaModalProps {
     idea: Idea | null;
     ideas: Idea[] | null,

@@ -1,9 +1,6 @@
 import React from 'react';
 
 import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
-import Garbage from '@mui/icons-material/Delete';
-import Edit from '@mui/icons-material/Edit';
 
 import CategoryColumn from '@category/CategoryColumn';
 
@@ -11,7 +8,6 @@ import customTheme from '../theme';
 
 import Category from '../types/Category';
 import Idea from '../types/Idea';
-import { Tooltip } from '@mui/material';
 
 interface AdminHomePageContentProps {
     categories: Category[] | null;

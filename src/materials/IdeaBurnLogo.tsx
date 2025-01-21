@@ -4,7 +4,6 @@ import Box from '@mui/material/Box';
 
 import Text from '@materials/Text';
 
-import customTheme from '../theme';
 import { Size } from '../types/Size';
 
 interface IdeaBurnLogoProps {

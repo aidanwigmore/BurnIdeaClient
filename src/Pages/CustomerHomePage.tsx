@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import axios from 'axios';
 
 import { useAuth } from '@context/AuthContext';
+import { useIdeaContext } from '@context/IdeaContext';
+import { useCategoryContext } from '@context/CategoryContext';
 
 import Box from '@mui/material/Box';
 
@@ -9,15 +10,9 @@ import Filters from 'filters/Filters';
 import CustomerHomePageContent from '@content/CustomerHomePageContent';
 import CustomerLayout from '@layout/CustomerLayout';
 
-import Category from '../types/Category';
-import Idea from '../types/Idea';
-
-import customTheme from '../theme';
-
 function CustomerHomePage() {
-  const [categories, setCategories] = useState<Category[] | null>(null);
-  const [ideas, setIdeas] = useState<Idea[] | null>(null);
-
+  const { categories, fetchCategories } = useCategoryContext();
+  const { ideas, fetchIdeas } = useIdeaContext();
   const { customer, fetchCustomerDetails, error } = useAuth();
   
   const [sortNew, setSortNew] = useState<Boolean>(true);
@@ -62,27 +57,6 @@ function CustomerHomePage() {
     handleModalOverLayOpen();
     setRegisterModalOpen(true);
   }, [handleModalOverLayOpen]);
-
-  useEffect(() => {
-    axios.get(`${process.env.REACT_APP_API_BASE}/api/categories/`)
-      .then(response => {
-        setCategories(response.data);
-      })
-      .catch(error => {
-        console.error('Error fetching category:', error);
-      });
-  }, []);
-
-  useEffect(() => {
-    axios.get(`${process.env.REACT_APP_API_BASE}/api/ideas/`
-    )
-      .then(response => {
-        setIdeas(response.data);
-      })
-      .catch(error => {
-        console.error('Error fetching ideas:', error);
-      });
-  }, []);
 
   const handleSearchInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchQuery(event.target.value);

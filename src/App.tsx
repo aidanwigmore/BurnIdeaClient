@@ -4,6 +4,11 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import './App.css';
 
 import { AuthProvider } from '@context/AuthContext';
+import { IdeaProvider } from '@context/IdeaContext';
+import { CategoryProvider } from '@context/CategoryContext';
+import { AboutProvider } from '@context/AboutContext';
+import { FaqProvider } from '@context/FAQContext';
+
 import { MantineProvider } from '@mantine/core';
 import { ThemeProvider } from '@mui/material/styles';
 
@@ -20,15 +25,23 @@ function App() {
     <MantineProvider>
       <ThemeProvider theme={customTheme}>
         <AuthProvider>
-          <Router>
-            <Routes>
-              <Route path="/" element={<CustomerHomePage />} />
-              <Route path="/admin" element={<AdminHomePage />} />
-              <Route path="/ideas/:id" element={<CustomerIdeaPage />} />
-              <Route path="/faq" element={<FAQPage />} />
-              <Route path="/about-us" element={<AboutUsPage />} />
-            </Routes>
-          </Router>
+          <CategoryProvider>
+            <IdeaProvider>
+              <AboutProvider>
+                <FaqProvider>
+                  <Router>
+                    <Routes>
+                      <Route path="/" element={<CustomerHomePage />} />
+                      <Route path="/admin" element={<AdminHomePage />} />
+                      <Route path="/ideas/:id" element={<CustomerIdeaPage />} />
+                      <Route path="/faq" element={<FAQPage />} />
+                      <Route path="/about-us" element={<AboutUsPage />} />
+                    </Routes>
+                  </Router>
+                </FaqProvider>
+              </AboutProvider>
+            </IdeaProvider>
+          </CategoryProvider>
         </AuthProvider>
       </ThemeProvider>
     </MantineProvider>

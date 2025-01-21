@@ -7,10 +7,8 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 
 import Text from '@materials/Text';
-import CustomSwitch from '@materials/CustomSwitch';
 import IdeaBurnLogo from '@materials/IdeaBurnLogo';
 
-import customTheme from '../theme';
 import { Size } from '../types/Size';
 
 interface HeaderProps {

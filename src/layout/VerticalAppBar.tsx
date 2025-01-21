@@ -1,5 +1,4 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import axios from 'axios';
 
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '@context/AuthContext';
@@ -7,18 +6,12 @@ import { useAuth } from '@context/AuthContext';
 import Alert from '@mui/material/Alert';
 import AccountCircleOutlined from '@mui/icons-material/AccountCircleOutlined';
 import AppBar from '@mui/material/AppBar';
-import Archive from '@mui/icons-material/Archive';
-import Bookmark from '@mui/icons-material/Bookmark';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Register from '@mui/icons-material/PersonAdd';
 import Login from '@mui/icons-material/Login';
 import LogoutOutlined from '@mui/icons-material/LogoutOutlined';
-import Mail from '@mui/icons-material/Mail';
-import Map from '@mui/icons-material/Map';
-import ShoppingCart from '@mui/icons-material/ShoppingCart';
 import Snackbar from '@mui/material/Snackbar';
-import Star from '@mui/icons-material/Star';
 
 import Customer from '../types/Customer';
 
@@ -71,7 +64,6 @@ function VerticalAppBar({
     }, 2000);
   }, [navigate]);
 
-  //handle login
   const handleLogin = useCallback(async (email: string, password: string) => {
     try {
       await login(email, password);

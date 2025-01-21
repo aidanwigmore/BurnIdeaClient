@@ -4,8 +4,6 @@ import DOMPurify from 'dompurify';
 import Box from '@mui/material/Box';
 import { Tooltip } from '@mui/material';
 
-import Text from '@materials/Text';
-
 import CategoryButton from './CategoryButton';
 import IdeaImageCard from '@idea/IdeaImageCard';
 
@@ -13,7 +11,6 @@ import Category from '../types/Category';
 import Idea from '../types/Idea';
 
 import customTheme from '../theme';
-import { Size } from '../types/Size';
 
 interface CategoryColumnProps {
     renderHeader: boolean;

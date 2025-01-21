@@ -15,8 +15,6 @@ import FAQ from '../types/FAQ';
 
 import { Size } from '../types/Size';
 
-import customTheme from '../theme';
-
 interface FaqModalProps {
     faq: FAQ | null;
     faqs: FAQ[] | null,

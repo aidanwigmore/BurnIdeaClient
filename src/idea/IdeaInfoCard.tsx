@@ -8,12 +8,9 @@ import Idea from '../types/Idea';
 
 interface IdeaInfoCardProps {
     idea: Idea;
-    height: number;
-    width: number | string;
 }
 
-function IdeaInfoCard({ idea, height, width }: IdeaInfoCardProps) {
-
+function IdeaInfoCard({ idea }: IdeaInfoCardProps) {
     return (
         <Card
             sx={{

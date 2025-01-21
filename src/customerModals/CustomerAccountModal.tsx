@@ -1,7 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-
-import { useAuth } from '@context/AuthContext';
 
 import { useNavigate } from 'react-router-dom';
 
@@ -11,8 +8,6 @@ import Box from '@mui/material/Box';
 import AccountForm from '@form/AccountForm';
 
 import Text from '@materials/Text';
-
-import Customer from '../types/Customer';
 
 interface CustomerAccountModalProps {
     handleNavigation: (url: string | undefined) => void;

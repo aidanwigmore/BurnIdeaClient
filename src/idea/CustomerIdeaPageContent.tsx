@@ -16,7 +16,6 @@ interface CustomerIdeaPageContentProps {
 }
 
 function CustomerIdeaPageContent({ idea, ideas, categories }: CustomerIdeaPageContentProps) {
-
     return (
         <>
             <Box sx={{

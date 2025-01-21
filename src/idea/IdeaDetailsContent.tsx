@@ -29,7 +29,7 @@ function IdeaDetailsContent({ idea, category }: IdeaDetailsContentProps) {
         >
             <React.Fragment key={`idea-fragment-${idea.id}`}>
                 <IdeaImageCard key={`idea-${idea.id}`} idea={idea} category={category} />
-                <IdeaInfoCard idea={idea} height={350} width={350} />
+                <IdeaInfoCard idea={idea} />
             </React.Fragment>
         </Box>
     )

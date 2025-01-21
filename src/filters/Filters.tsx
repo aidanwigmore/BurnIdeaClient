@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
 
-import Divider from '@mui/material/Divider';
-import Input from '@mui/material/Input';
-import { Box, TextField, Switch, FormControlLabel, Button, Collapse, InputBase } from '@mui/material';
+import { Box, FormControlLabel, Button, Collapse } from '@mui/material';
 
 import SearchInput from '@materials/SearchInput';
 import FilterDivider from '@materials/FilterDivider';

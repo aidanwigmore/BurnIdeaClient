@@ -16,8 +16,6 @@ import About from '../types/About';
 
 import { Size } from '../types/Size';
 
-import customTheme from '../theme';
-
 interface AdminAboutModalProps {
     about: About | null;
     abouts: About[] | null,

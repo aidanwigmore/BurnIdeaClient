@@ -9,7 +9,6 @@ import Save from '@mui/icons-material/CheckOutlined';
 
 import Text from '@materials/Text';
 import RichTextEditor from '@materials/RichTextEditor';
-import CustomInput from '@materials/CustomInput';
 import FormButtonGroup from '@materials/FormButtonGroup';
 
 import customTheme from '../theme';

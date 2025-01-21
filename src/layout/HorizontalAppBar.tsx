@@ -4,14 +4,8 @@ import AppBar from '@mui/material/AppBar';
 import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
-import MenuIcon from '@mui/icons-material/Menu';
-import LocationOnIcon from '@mui/icons-material/LocationOn';
-import CommuteIcon from '@mui/icons-material/Commute';
 import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
-import NotificationsIcon from '@mui/icons-material/Notifications';
 import InfoIcon from '@mui/icons-material/Info';
-import IconButton from '@mui/material/IconButton';
-import FilterAltIcon from '@mui/icons-material/FilterAlt';
 
 import customTheme from '../theme';
 

@@ -1,18 +1,14 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import axios from 'axios';
-import { useParams } from 'react-router-dom';
 
 import Box from '@mui/material/Box';
 import FAQContent from '@content/FAQContent';
 import CustomerLayout from '@layout/CustomerLayout';
 
-import FAQ from '../types/FAQ';
-
-const faqs: FAQ[] = [];
+import { useFaqContext } from '@context/FAQContext';
 
 function FAQPage() {
 
-  const [faqs, setFaqs] = useState<FAQ[] | null>(null);
+  const { faqs, fetchFaqs, error } = useFaqContext();
 
   const [modalOverLayOpen, setModalOverLayOpen] = useState(false);
   const [accountModalOpen, setAccountModalOpen] = useState(false);
@@ -49,17 +45,6 @@ function FAQPage() {
     handleModalOverLayOpen();
     setRegisterModalOpen(true);
   }, [handleModalOverLayOpen]);
-
-  useEffect(() => {
-    axios.get(`${process.env.REACT_APP_API_BASE}/api/faq/`
-    )
-      .then(response => {
-        setFaqs(response.data);
-      })
-      .catch(error => {
-        console.error('Error fetching faq:', error);
-      });
-  }, []);
 
   return (
     <>

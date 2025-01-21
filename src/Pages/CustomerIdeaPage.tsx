@@ -6,17 +6,16 @@ import Box from '@mui/material/Box';
 import CustomerIdeaPageContent from '@idea/CustomerIdeaPageContent';
 import CustomerLayout from '@layout/CustomerLayout';
 
-import Category from '../types/Category';
-import Idea from '../types/Idea';
+import { useIdeaContext } from '@context/IdeaContext';
 
-const categories: Category[] = [];
+import Idea from '../types/Idea';
 
 function CustomerIdeaPage() {
 
   const { id } = useParams<{ id: string }>();
 
   const [idea, setIdea] = useState<Idea | null>(null);
-  const [ideas, setIdeas] = useState<Idea[] | null>(null);
+  const { ideas, fetchIdeas, error } = useIdeaContext();
 
   const [modalOverLayOpen, setModalOverLayOpen] = useState(false);
   const [accountModalOpen, setAccountModalOpen] = useState(false);
@@ -55,18 +54,11 @@ function CustomerIdeaPage() {
   }, [handleModalOverLayOpen]);
 
   useEffect(() => {
+    fetchIdeas();
     if (id) {
-      axios.get(`${process.env.REACT_APP_API_BASE}/api/ideas/`,
-      )
-        .then(response => {
-          if (response.data) {
-            setIdeas(response.data);
-            setIdea(response.data.find((idea: Idea) => idea.id == id));
-          }
-        })
-        .catch(error => {
-          console.error('Error fetching ideas:', error);
-        });
+      const ideaId = parseInt(id, 10);
+      const foundIdea = ideas.find((idea: Idea) => Number(idea.id) === ideaId);
+      setIdea(foundIdea || null);
     }
   }, [id]);
 
@@ -74,7 +66,7 @@ function CustomerIdeaPage() {
     <>
       <CustomerLayout
         ideas={ideas}
-        categories={categories}
+        categories={null}
         modalOverLayOpen={modalOverLayOpen}
         accountModalOpen={accountModalOpen}
         loginModalOpen={loginModalOpen}

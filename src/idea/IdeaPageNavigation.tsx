@@ -1,11 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 
 import { Box, Tabs, Tab } from '@mui/material';
-import Report from '@mui/icons-material/Report';
 
 import IdeaDetailsContent from '@idea/IdeaDetailsContent';
-
-import customTheme from '../theme';
 
 import Category from '../types/Category';
 import Idea from '../types/Idea';

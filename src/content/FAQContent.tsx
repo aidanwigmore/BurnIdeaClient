@@ -7,16 +7,14 @@ import Input from '@mui/material/Input';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import Divider from '@mui/material/Divider';
-
 import ExpandIcon from '@mui/icons-material/ExpandMore';
 
 import Text from '@materials/Text';
 
-import customTheme from '../theme';
-
 import FAQ from '../types/FAQ';
-
 import { Size } from '../types/Size';
+
+import customTheme from '../theme';
 
 interface FAQContentProps {
     faqs: FAQ[] | null;

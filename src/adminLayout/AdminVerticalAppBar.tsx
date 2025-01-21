@@ -6,24 +6,17 @@ import { useNavigate } from 'react-router-dom';
 import Alert from '@mui/material/Alert';
 import AccountCircleOutlined from '@mui/icons-material/AccountCircleOutlined';
 import AppBar from '@mui/material/AppBar';
-import Archive from '@mui/icons-material/Archive';
-import Bookmark from '@mui/icons-material/Bookmark';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Category from '@mui/icons-material/Category';
 import Login from '@mui/icons-material/Login';
 import LogoutOutlined from '@mui/icons-material/LogoutOutlined';
-import Map from '@mui/icons-material/Map';
-import Mail from '@mui/icons-material/Mail';
 import MenuBookIcon from '@mui/icons-material/MenuBook';
-import ShoppingCart from '@mui/icons-material/ShoppingCart';
 import Snackbar from '@mui/material/Snackbar';
-import Star from '@mui/icons-material/Star';
 import Question from '@mui/icons-material/QuestionAnswer';
 import RttIcon from '@mui/icons-material/Rtt';
 
 import Customer from '../types/Customer';
-import About from '../types/About';
 
 import customTheme from '../theme';
 

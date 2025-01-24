@@ -1,6 +1,9 @@
 {
   "name": "create-burn-idea-app",
   "version": "0.1.0",
+  "engines": {
+    "node": "22.x"
+  },
   "description": "Client application for BurnIdea; A place to store and display all your ideas!",
   "author": "GraydanBligmore <aidanwigmore4@gmail.com>",
   "scripts": {

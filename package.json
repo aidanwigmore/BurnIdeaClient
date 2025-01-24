@@ -1,7 +1,7 @@
 {
   "name": "create-burn-idea-app",
+  "version": "0.1.0",
   "description": "Client application for BurnIdea; A place to store and display all your ideas!",
-  "version": "0.0.0",
   "author": "GraydanBligmore <aidanwigmore4@gmail.com>",
   "scripts": {
     "start": "react-app-rewired start",

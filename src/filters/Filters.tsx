@@ -42,7 +42,7 @@ function Filters({
         <Box sx={{
             display: 'flexbox',
             flexDirection: 'row',
-            width: '99%',
+            width: '100%',
             backgroundColor: customTheme.palette.secondary.main,
             borderRadius: '15px',
             gap: '12px',

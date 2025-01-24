@@ -1,7 +1,8 @@
 import React, { useState, useCallback } from 'react';
-import axios from 'axios';
 
 import DOMPurify from 'dompurify';
+
+import { useIdeaContext } from '@context/IdeaContext';
 
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
@@ -21,12 +22,13 @@ interface AdminIdeaModalProps {
     idea: Idea | null;
     ideas: Idea[] | null,
     setIdea: (idea: Idea) => void;
-    setIdeas: (ideas: Idea[]) => void;
     handleResetIdea: () => void;
     handleNavigation: (url: string | undefined) => void;
 }
 
-function AdminIdeaModal({ idea, ideas, setIdea, setIdeas, handleResetIdea, handleNavigation }: AdminIdeaModalProps) {
+function AdminIdeaModal({ idea, ideas, setIdea, handleResetIdea, handleNavigation }: AdminIdeaModalProps) {
+    const { fetchIdeas, deleteIdea } = useIdeaContext();
+    
     const [searchQuery, setSearchQuery] = useState('');
     const [selectedIdea, setSelectedIdea] = useState<Idea | null>(null);
     const [newIdea, setNewIdea] = useState<Idea | null>(null);
@@ -56,23 +58,13 @@ function AdminIdeaModal({ idea, ideas, setIdea, setIdeas, handleResetIdea, handl
     });
 
     const handleRefresh = useCallback(async () => {
-        const newIdeas = await axios.get(`${process.env.REACT_APP_API_BASE}/api/ideas/`, {
-            headers: { 'Authorization': `Token ${localStorage.getItem('token')}` }
-        });
-        setIdeas(newIdeas.data);
-    }, [setIdeas]);
+        fetchIdeas();
+    }, []);
 
     const handleDelete = useCallback((idea: Idea) => {
-        axios.delete(`${process.env.REACT_APP_API_BASE}/api/ideas/${idea.id}/`,
-            { headers: { Authorization: `Token ${localStorage.getItem('token')}` } }
-        )
-            .then(() => {
-                handleResetIdea();
-                handleRefresh();
-            })
-            .catch(error => {
-                console.error('Error deleting idea:', error);
-            });
+        deleteIdea(idea.id || '');
+        handleResetIdea();
+        handleRefresh();
     }, [handleResetIdea, handleRefresh]);
 
     const transformedIdeas = filteredIdeas?.map((idea) => ({
@@ -132,7 +124,6 @@ function AdminIdeaModal({ idea, ideas, setIdea, setIdeas, handleResetIdea, handl
                         <IdeaForm
                             idea={selectedIdea ?? newIdea}
                             handleCancel={handleCancel}
-                            setIdeas={setIdeas}
                             handleResetIdea={handleResetIdea}
                         />
                     </Box>

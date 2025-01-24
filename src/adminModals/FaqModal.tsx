@@ -1,5 +1,6 @@
 import React, { useState, useCallback } from 'react';
-import axios from 'axios';
+
+import { useFaqContext } from '@context/FAQContext';
 
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
@@ -19,12 +20,13 @@ interface FaqModalProps {
     faq: FAQ | null;
     faqs: FAQ[] | null,
     setFaq: (faq: FAQ) => void;
-    setFaqs: (faqs: FAQ[]) => void;
     handleResetFaq: () => void;
     handleNavigation: (url: string | undefined) => void;
 }
 
-function FaqModal({ faq, faqs, setFaq, setFaqs, handleResetFaq, handleNavigation }: FaqModalProps) {
+function FaqModal({ faq, faqs, setFaq, handleResetFaq, handleNavigation }: FaqModalProps) {
+    const { fetchFaqs, deleteFaq } = useFaqContext();
+
     const [searchQuery, setSearchQuery] = useState('');
     const [selectedFaq, setSelectedFaq] = useState<FAQ | null>(null);
     const [newFaq, setNewFaq] = useState<FAQ | null>(null);
@@ -51,25 +53,15 @@ function FaqModal({ faq, faqs, setFaq, setFaqs, handleResetFaq, handleNavigation
             faq.answer?.toLowerCase().includes(searchQueryLowerCase)
         );
     });
-
+    
     const handleRefresh = useCallback(async () => {
-        const newFaqs = await axios.get(`${process.env.REACT_APP_API_BASE}/api/faq/`, {
-            headers: { 'Authorization': `Token ${localStorage.getItem('token')}` }
-        });
-        setFaqs(newFaqs.data);
-    }, [setFaqs]);
+        fetchFaqs();
+    }, []);
 
     const handleDelete = useCallback((faq: FAQ) => {
-        axios.delete(`${process.env.REACT_APP_API_BASE}/api/faq/${faq.id}/`,
-            { headers: { Authorization: `Token ${localStorage.getItem('token')}` } }
-        )
-            .then(() => {
-                handleResetFaq();
-                handleRefresh();
-            })
-            .catch(error => {
-                console.error('Error deleting faq:', error);
-            });
+        deleteFaq(faq.id ?? '');
+        handleResetFaq();
+        fetchFaqs();
     }, [handleResetFaq, handleRefresh]);
 
     const transformedFaqs = filteredFaqs?.map((faq) => ({
@@ -125,7 +117,6 @@ function FaqModal({ faq, faqs, setFaq, setFaqs, handleResetFaq, handleNavigation
                         <FaqForm
                             faq={selectedFaq ?? newFaq}
                             handleCancel={handleCancel}
-                            setFaqs={setFaqs}
                             handleResetFaq={handleResetFaq}
                         />
                     </Box>

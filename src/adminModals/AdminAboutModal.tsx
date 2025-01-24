@@ -1,6 +1,7 @@
 import React, { useState, useCallback } from 'react';
-import axios from 'axios';
 import DOMPurify from 'dompurify';
+
+import { useAboutContext } from '@context/AboutContext';
 
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
@@ -20,12 +21,13 @@ interface AdminAboutModalProps {
     about: About | null;
     abouts: About[] | null,
     setAbout: (about: About) => void;
-    setAbouts: (abouts: About[]) => void;
     handleResetAbout: () => void;
     handleNavigation: (url: string | undefined) => void;
 }
 
-function AdminAboutModal({ about, abouts, setAbout, setAbouts, handleResetAbout, handleNavigation }: AdminAboutModalProps) {
+function AdminAboutModal({ about, abouts, setAbout, handleResetAbout, handleNavigation }: AdminAboutModalProps) {
+    const { fetchAbouts, deleteAbout } = useAboutContext();
+    
     const [searchQuery, setSearchQuery] = useState('');
     const [selectedAbout, setSelectedAbout] = useState<About | null>(null);
     const [newAbout, setNewAbout] = useState<About | null>(null);
@@ -53,24 +55,14 @@ function AdminAboutModal({ about, abouts, setAbout, setAbouts, handleResetAbout,
     });
 
     const handleRefresh = useCallback(async () => {
-        const newAbouts = await axios.get(`${process.env.REACT_APP_API_BASE}/api/about/`, {
-            headers: { 'Authorization': `Token ${localStorage.getItem('token')}` }
-        });
-        setAbouts(newAbouts.data);
-    }, [setAbouts]);
+            fetchAbouts();
+    }, []);
 
     const handleDelete = useCallback((about : About) => {
-        axios.delete(`${process.env.REACT_APP_API_BASE}/api/about/${about.id}/`,
-            { headers: { Authorization: `Token ${localStorage.getItem('token')}` } }
-        )
-            .then(() => {
-                handleResetAbout();
-                handleRefresh();
-            })
-            .catch(error => {
-                console.error('Error deleting about:', error);
-            });
-    }, [handleResetAbout, handleRefresh]);
+        deleteAbout(about.id || '');
+        handleResetAbout();
+        handleRefresh();
+    }, [handleResetAbout, handleRefresh]); 
 
     const transformedAbouts = filteredAbouts?.map((about) => ({
         id: about.id || '',
@@ -125,7 +117,6 @@ function AdminAboutModal({ about, abouts, setAbout, setAbouts, handleResetAbout,
                         <AboutForm
                             about={selectedAbout ?? newAbout}
                             handleCancel={handleCancel}
-                            setAbouts={setAbouts}
                             handleResetAbout={handleResetAbout}
                         />
                     </Box>

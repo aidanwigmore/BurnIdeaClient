@@ -4,6 +4,7 @@ import axios from 'axios';
 
 interface AuthContextProps {
   customer: Customer | null;
+  customers: Customer[];
   token: string | null;
   error: string | null;
   login: (email: string, password: string) => Promise<void>;
@@ -21,8 +22,21 @@ interface AuthProviderProps {
 
 export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const [customer, setCustomer] = useState<Customer | null>(null);
+  const [customers, setCustomers] = useState<Customer[]>([]);
   const [token, setToken] = useState<string | null>(localStorage.getItem('token'));
   const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (token) {
+      axios.get(`${process.env.REACT_APP_API_BASE}/api/customers/admin/`, {
+        headers: { 'Authorization': `Token ${localStorage.getItem('token')}` }
+      })
+        .then(response => {
+          setCustomers(response.data);
+        })
+        .catch(error => console.error('Error fetching customers:', error));
+    }
+  }, [token]);
 
   useEffect(() => {
     if (token) {
@@ -94,7 +108,8 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
   return (
     <AuthContext.Provider value={{ 
-      customer, 
+      customer,
+      customers,
       token, 
       error, 
       login, 

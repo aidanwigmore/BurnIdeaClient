@@ -1,5 +1,6 @@
 import React, { useState, useCallback } from 'react';
-import axios from 'axios';
+
+import { useCategoryContext } from '@context/CategoryContext';
 
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
@@ -30,10 +31,11 @@ interface CategoryFormProps {
     ideas?: Idea[] | null;
     handleResetCategory: () => void;
     handleCancel: () => void;
-    setCategories: (categories: Category[]) => void;
 }
 
-function CategoryForm({ category, ideas, setCategories, handleResetCategory, handleCancel }: CategoryFormProps) {
+function CategoryForm({ category, ideas, handleResetCategory, handleCancel }: CategoryFormProps) {
+    const { fetchCategories, updateCategory, createCategory } = useCategoryContext();
+    
     const [renderEditDelete, setRenderEditDelete] = useState(true);
 
     const [edit, setEdit] = useState(false);
@@ -115,9 +117,8 @@ function CategoryForm({ category, ideas, setCategories, handleResetCategory, han
     };
 
     const handleRefresh = useCallback(async () => {
-        const newCategories = await axios.get(`${process.env.REACT_APP_API_BASE}/api/categories/`);
-        setCategories(newCategories.data);
-    }, [setCategories]);
+        fetchCategories();
+    }, []);
 
     const handleSave = useCallback(() => {
         setRenderEditDelete(true);
@@ -129,13 +130,7 @@ function CategoryForm({ category, ideas, setCategories, handleResetCategory, han
                 color: newCategory.color,
                 ideas: newCategory.ideas,
             };
-
-            axios.post(`${process.env.REACT_APP_API_BASE}/api/categories/`, postData, {
-                headers: {
-                    'Content-Type': 'application/json',
-                }
-            })
-                .catch(error => console.error('Error posting category:', error));
+            createCategory(postData);
         } else if (category?.id !== null) {
             const putData = {
                 name: newCategory.name,
@@ -144,12 +139,7 @@ function CategoryForm({ category, ideas, setCategories, handleResetCategory, han
                 color: newCategory.color,
                 ideas: newCategory.ideas,
             };
-            axios.put(`${process.env.REACT_APP_API_BASE}/api/categories/${newCategory.id}/`, putData, {
-                headers: {
-                    'Content-Type': 'application/json',
-                }
-            })
-                .catch(error => console.error('Error putting category:', error));
+            updateCategory(newCategory.id, putData);
         }
         handleCancel();
         handleResetCategory();
@@ -208,7 +198,6 @@ function CategoryForm({ category, ideas, setCategories, handleResetCategory, han
                     size={Size.small}
                     text={"Colour"}
                 />
-                {/* <CustomInput width={'80%'} id={1} text={newCategory.color || (category?.color || "Color")} onChange={handleColorChange} error={""} /> */}
                 <input
                     type="color"
                     value={newCategory.color || (category?.color || "#000000")}

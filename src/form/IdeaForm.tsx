@@ -1,5 +1,6 @@
 import React, { useState, useCallback, useEffect } from 'react';
-import axios from 'axios';
+
+import { useIdeaContext } from '@context/IdeaContext';
 
 import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
@@ -22,9 +23,10 @@ interface IdeaFormProps {
     idea?: Idea | null;
     handleResetIdea: () => void;
     handleCancel: () => void;
-    setIdeas: (ideas: Idea[]) => void;
 }
-function IdeaForm({ idea, handleResetIdea, handleCancel, setIdeas }: IdeaFormProps) {
+function IdeaForm({ idea, handleResetIdea, handleCancel }: IdeaFormProps) {
+    const { fetchIdeas, updateIdea, createIdea } = useIdeaContext();
+    
     const [renderEditDelete, setRenderEditDelete] = useState(true);
 
     const [edit, setEdit] = useState(false);
@@ -33,11 +35,8 @@ function IdeaForm({ idea, handleResetIdea, handleCancel, setIdeas }: IdeaFormPro
     const [deleteAccount, setDeleteAccount] = useState(false);
 
     const handleRefresh = useCallback(async () => {
-        const newIdeas = await axios.get(`${process.env.REACT_APP_API_BASE}/api/ideas/`, {
-            headers: { 'Authorization': `Token ${localStorage.getItem('token')}` }
-        });
-        setIdeas(newIdeas.data);
-    }, [setIdeas]);
+        fetchIdeas();
+    }, []);
 
     const [newIdea, setNewIdea] = useState<Idea>({
         id: idea?.id || undefined,
@@ -114,33 +113,25 @@ function IdeaForm({ idea, handleResetIdea, handleCancel, setIdeas }: IdeaFormPro
             if (newIdea.id === undefined) {
                 const postData = {
                     ...newIdea,
-                    visible: newIdea.visible.toString(),
+                    visible: newIdea.visible,
                     image: newIdea.image,
                 };
-                response = await axios.post(`${process.env.REACT_APP_API_BASE}/api/ideas/`, postData, {
-                    headers: {
-                        'Authorization': `Token ${token}`
-                    }
-                });
+                createIdea(postData);
             } else {
                 const putData = {
                     ...newIdea,
-                    visible: newIdea.visible.toString(),
+                    visible: newIdea.visible,
                     image: newIdea.image,
                 };
-                response = await axios.put(`${process.env.REACT_APP_API_BASE}/api/ideas/${newIdea.id}/`, putData, {
-                    headers: {
-                        'Authorization': `Token ${token}`
-                    }
-                });
+                updateIdea(newIdea.id, putData);
             }
-
-            setIdeas(response.data);
+            handleCancel();
+            handleRefresh();
             handleResetIdea();
         } catch (error) {
             console.error('Error saving idea:', error);
         }
-    }, [newIdea, handleResetIdea, setIdeas]);
+    }, [newIdea, handleResetIdea, handleCancel, handleRefresh]);
 
     return (
         <>

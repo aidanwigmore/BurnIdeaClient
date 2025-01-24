@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import axios from 'axios';
 
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
@@ -7,6 +6,8 @@ import Card from '@mui/material/Card';
 import Divider from '@mui/material/Divider';
 import Text from '@materials/Text';
 import TextField from '@mui/material/TextField';
+
+import { useCategoryContext } from '@context/CategoryContext';
 
 import CustomTable from '@materials/CustomTable';
 import CategoryForm from '@form/CategoryForm';
@@ -20,12 +21,13 @@ interface AdminCategoryModalProps {
     ideas: Idea[] | null;
     categories: Category[] | null;
     setCategory: (category: Category) => void;
-    setCategories: (categories: Category[]) => void;
     handleResetCategory: () => void;
     handleNavigation: (url: string | undefined) => void;
 }
 
-function AdminCategoryModal({ category, ideas, setCategory, setCategories, categories, handleResetCategory, handleNavigation }: AdminCategoryModalProps) {
+function AdminCategoryModal({ category, ideas, setCategory, categories, handleResetCategory, handleNavigation }: AdminCategoryModalProps) {
+    const { fetchCategories, deleteCategory } = useCategoryContext();
+    
     const [searchQuery, setSearchQuery] = useState('');
     const [selectedCategory, setSelectedCategory] = useState<Category | null>(null);
     const [newCategory, setNewCategory] = useState<Category | null>(null);
@@ -53,14 +55,9 @@ function AdminCategoryModal({ category, ideas, setCategory, setCategories, categ
     };
 
     const handleDelete = (category: Category) => {
-        axios.delete(`${process.env.REACT_APP_API_BASE}/api/categories/${category.id}/`)
-            .then(response => {
-                setCategories(categories?.filter(c => c.id !== category.id) || []);
-                handleResetCategory();
-            })
-            .catch(error => {
-                console.error('Error deleting category:', error);
-            });
+        deleteCategory(category.id ?? '');
+        handleResetCategory();
+        fetchCategories();
     };
 
     const transformedCategories = filteredCategories?.map((category) => ({
@@ -119,7 +116,6 @@ function AdminCategoryModal({ category, ideas, setCategory, setCategories, categ
                             ideas={ideas}
                             handleCancel={handleCancel}
                             handleResetCategory={handleResetCategory}
-                            setCategories={setCategories}
                         />
                     </Box>
                 </>

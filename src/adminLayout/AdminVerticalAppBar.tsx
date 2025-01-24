@@ -1,6 +1,6 @@
 import React, { useCallback, useState, useEffect } from 'react';
-import axios from 'axios';
 
+import { useAuth } from '@context/AuthContext';
 import { useNavigate } from 'react-router-dom';
 
 import Alert from '@mui/material/Alert';
@@ -38,15 +38,13 @@ function AdminVerticalAppBar({
   setAboutModalOpen,
 }: AdminVerticalAppBarProps) {
 
+  const { customer, token } = useAuth();
+
   const navigate = useNavigate();
 
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState('');
   const [severity, setSeverity] = useState<"error" | "success" | "info" | "warning">('error');
-
-  const token = localStorage.getItem('token');
-
-  const [admin, setAdmin] = useState<Customer | null>(null);
 
   const handleSnackbarClose = () => {
     setSnackbarOpen(false);
@@ -79,51 +77,13 @@ function AdminVerticalAppBar({
   const handleLogout = useCallback(() => {
     localStorage.removeItem('token');
     localStorage.removeItem('cart');
-    setAdmin(null);
     setTimeout(() => {
       navigate('/admin');
     }, 2000);
   }, [navigate]);
 
-  useEffect(() => {
-    if (token) {
-      try {
-        axios.get(`${process.env.REACT_APP_API_BASE}/api/customers/me/`, {
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Token ${token}`
-          }
-        })
-          .then((response) => {
-            setAdmin(response.data);
-            if (response.data.isStaff === true) {
-              setSnackbarMessage('Successful sign-in from client storage.');
-              setSnackbarOpen(true);
-              setSeverity('success');
-            } else {
-              setSnackbarMessage('You are not authenticated to view this page.');
-              setSnackbarOpen(true);
-              setSeverity('error');
-              setTimeout(() => {
-                navigate('/');
-              }, 2000);
-            }
-          })
-          .catch((error) => {
-            setSnackbarMessage('Error signing in from client storage.');
-            setSnackbarOpen(true);
-            setSeverity('error');
-          });
-      } catch (error) {
-        setSnackbarMessage('Error signing in from client storage.');
-        setSnackbarOpen(true);
-        setSeverity('error');
-      }
-    }
-  }, [navigate, token]);
-
   const renderLoginButtons = useCallback(() => {
-    if (admin?.isStaff === true && token) {
+    if (customer?.isStaff === true && token) {
       return (
         <>
           <Button sx={{ color: 'white', fontSize: '12px', display: 'flex', flexDirection: 'column', paddingBottom: '10px', marginLeft: 'auto', marginRight: 'auto' }} onClick={handleLogout}>
@@ -162,7 +122,7 @@ function AdminVerticalAppBar({
       );
     }
   }, [
-    admin, token,
+    customer, token,
     handleCustomersModalOpen,
     handleLoginModalOpen, handleLogout,
     handleIdeaModalOpen,

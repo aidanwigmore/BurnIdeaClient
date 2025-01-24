@@ -1,5 +1,6 @@
 import React, { useState, useCallback } from 'react';
-import axios from 'axios';
+
+import { useAuth } from '@context/AuthContext';
 
 import Alert from '@mui/material/Alert';
 import Box from '@mui/material/Box';
@@ -17,6 +18,8 @@ interface AdminLoginFormProps {
 }
 
 function AdminLoginForm({ handleNavigation }: AdminLoginFormProps) {
+    const { login } = useAuth();
+
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
@@ -36,27 +39,21 @@ function AdminLoginForm({ handleNavigation }: AdminLoginFormProps) {
     };
 
     const handleSubmit = useCallback(() => {
-        axios.post(`${process.env.REACT_APP_API_BASE}/api/customers/login/`, { email, password }, {
-            headers: {
-                'Content-Type': 'application/json',
-            }
-        })
-            .then((response) => {
-                localStorage.setItem('token', response.data.token);
-                setSnackbarMessage('Login successful');
+        try {
+            login(email, password);
+            setSnackbarMessage('Login successful');
                 setSeverity('success');
                 setTimeout(() => {
                     handleNavigation('/');
-                }, 2000);
-            })
-            .catch((error) => {
-                console.error('Error logging in:', error);
-                if (error.response) {
-                    setErrors(error.response.data);
-                }
-                setSnackbarMessage('Error logging in');
-                setSeverity('error');
-            });
+                }, 2000);    
+        } catch (error : any) {
+            console.error('Error logging in:', error);
+            if (error.response) {
+                setErrors(error.response.data);
+            }
+            setSnackbarMessage('Error logging in');
+            setSeverity('error');
+        };
     }, [email, password, handleNavigation]);
 
     const handleEmailChange = (event: React.ChangeEvent<HTMLInputElement>) => {

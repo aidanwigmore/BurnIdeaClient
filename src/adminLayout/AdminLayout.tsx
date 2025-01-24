@@ -38,14 +38,10 @@ interface AdminLayoutProps {
     faqs: FAQ[] | null;
     abouts: About[] | null;
 
-    setCategories: (categories: Category[]) => void;
     setCategory: (category: Category) => void;
     setIdea: (idea: Idea) => void;
-    setIdeas: (ideas: Idea[]) => void;
     setFaq: (faq: FAQ) => void;
-    setFaqs: (faqs: FAQ[]) => void;
     setAbout: (about: About) => void;
-    setAbouts: (abouts: About[]) => void;
 
     faqModalOpen: boolean;
     adminLoginModalOpen: boolean;
@@ -85,11 +81,7 @@ function AdminLayout({
     setFaq,
     setIdea,
     setCategory,
-    setCategories,
-    setIdeas,
-    setFaqs,
     setAbout,
-    setAbouts,
 
     faqModalOpen,
     adminLoginModalOpen,
@@ -131,7 +123,6 @@ function AdminLayout({
                     ideas={ideas ?? null}
                     categories={categories ?? null}
                     setCategory={() => setCategory}
-                    setCategories={() => setCategories}
                     handleResetCategory={handleResetCategory}
                     handleNavigation={handleCategoryModalOpen}
                 />
@@ -142,7 +133,6 @@ function AdminLayout({
                     idea={idea ?? null}
                     ideas={ideas ?? null}
                     setIdea={() => setIdea}
-                    setIdeas={() => setIdeas}
                     handleResetIdea={handleResetIdea}
                     handleNavigation={handleIdeaModalOpen}
                 />
@@ -158,7 +148,6 @@ function AdminLayout({
                 <FaqModal
                     faq={faq ?? null}
                     faqs={faqs ?? null}
-                    setFaqs={() => setFaqs}
                     setFaq={() => setFaq}
                     handleResetFaq={handleResetFaq}
                     handleNavigation={handleFaqModalOpen}
@@ -170,7 +159,6 @@ function AdminLayout({
                     about={about ?? null}
                     abouts={abouts ?? null}
                     setAbout={() => setAbout}
-                    setAbouts={() => setAbouts}
                     handleResetAbout={handleResetAbout}
                     handleNavigation={handleAboutModalOpen}
                 />
@@ -179,7 +167,7 @@ function AdminLayout({
     }, [
         customers, ideas, idea, category, categories, abouts, about,
         handleResetIdea, handleResetCategory, setCategory,
-        setCategories, setIdeas, setIdea, setFaq, faq, 
+        setIdea, setFaq, faq, 
         faqModalOpen,
         customersModalOpen,
         ideaModalOpen, aboutsModalOpen,

@@ -1,5 +1,6 @@
 import React, { useState, useCallback, useEffect } from 'react';
-import axios from 'axios';
+
+import { useAboutContext } from '@context/AboutContext';
 
 import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
@@ -21,19 +22,17 @@ interface AboutFormProps {
     about?: About | null;
     handleResetAbout: () => void;
     handleCancel: () => void;
-    setAbouts: (abouts: About[]) => void;
 }
-function AboutForm({ about, handleResetAbout, handleCancel, setAbouts }: AboutFormProps) {
+function AboutForm({ about, handleResetAbout, handleCancel }: AboutFormProps) {
+    const { fetchAbouts, updateAbout, createAbout } = useAboutContext();
+
     const [renderEditDelete, setRenderEditDelete] = useState(true);
 
     const [edit, setEdit] = useState(false);
 
     const handleRefresh = useCallback(async () => {
-        const newAbouts = await axios.get(`${process.env.REACT_APP_API_BASE}/api/about/`, {
-            headers: { 'Authorization': `Token ${localStorage.getItem('token')}` }
-        });
-        setAbouts(newAbouts.data);
-    }, [setAbouts]);
+        fetchAbouts();
+    }, []);
 
     const [newAbout, setNewAbout] = useState<About>({
         id: about?.id || undefined,
@@ -95,30 +94,22 @@ function AboutForm({ about, handleResetAbout, handleCancel, setAbouts }: AboutFo
                     content: newAbout.content.toString(),
                     image: newAbout.image,
                 };
-                response = await axios.post(`${process.env.REACT_APP_API_BASE}/api/about/`, postData, {
-                    headers: {
-                        'Authorization': `Token ${token}`
-                    }
-                });
+                createAbout(postData);
             } else {
                 const putData = {
                     ...newAbout,
                     content: newAbout.content.toString(),
                     image: newAbout.image,
                 };
-                response = await axios.put(`${process.env.REACT_APP_API_BASE}/api/about/${newAbout.id}/`, putData, {
-                    headers: {
-                        'Authorization': `Token ${token}`
-                    }
-                });
+                updateAbout(newAbout.id, putData);
             }
-
-            setAbouts(response.data);
+            handleCancel();
+            handleRefresh();
             handleResetAbout();
         } catch (error) {
             console.error('Error saving Abouts:', error);
         }
-    }, [newAbout, handleResetAbout, setAbouts]);
+    }, [newAbout, handleResetAbout, handleCancel, handleRefresh]);
 
     return (
         <>

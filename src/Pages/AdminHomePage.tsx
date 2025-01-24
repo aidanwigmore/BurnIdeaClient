@@ -1,5 +1,10 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import axios from 'axios';
+
+import { useAuth } from '@context/AuthContext';
+import { useIdeaContext } from '@context/IdeaContext';
+import { useCategoryContext } from '@context/CategoryContext';
+import { useAboutContext } from '@context/AboutContext';
+import { useFaqContext } from '@context/FAQContext';
 
 import Box from '@mui/material/Box';
 
@@ -14,11 +19,11 @@ import About from '../types/About';
 
 function AdminHomePage() {
 
-  const [categories, setCategories] = useState<Category[] | null>(null);
-  const [ideas, setIdeas] = useState<Idea[] | null>(null);
-  const [customers, setCustomers] = useState<Customer[] | null>(null);
-  const [faqs, setFaqs] = useState<FAQ[] | null>(null);
-  const [abouts, setAbouts] = useState<About[] | null>(null);
+  const { categories, fetchCategories } = useCategoryContext();
+  const { ideas, fetchIdeas } = useIdeaContext();
+  const { customer, customers, fetchCustomerDetails, error } = useAuth();
+  const { faqs, fetchFaqs } = useFaqContext();
+  const { abouts, fetchAbouts } = useAboutContext();
 
   const [modalOverLayOpen, setModalOverLayOpen] = useState(false);
   const [faqModalOpen, setFaqModalOpen] = useState(false);
@@ -84,62 +89,6 @@ function AdminHomePage() {
     setAbout(null);
   }, [setAbout]);
 
-  useEffect(() => {
-    axios.get(`${process.env.REACT_APP_API_BASE}/api/ideas/`,
-      { headers: { 'Authorization': `Token ${localStorage.getItem('token')}` } }
-    )
-      .then(response => {
-        setIdeas(response.data);
-      })
-      .catch(error => {
-        console.error('Error fetching ideas:', error);
-      });
-  }, []);
-
-  useEffect(() => {
-    axios.get(`${process.env.REACT_APP_API_BASE}/api/faq/`,
-      { headers: { 'Authorization': `Token ${localStorage.getItem('token')}` } }
-    )
-      .then(response => {
-        setFaqs(response.data);
-      })
-      .catch(error => {
-        console.error('Error fetching FAQ:', error);
-      });
-  }, []);
-
-  useEffect(() => {
-    axios.get(`${process.env.REACT_APP_API_BASE}/api/about/`,
-      { headers: { 'Authorization': `Token ${localStorage.getItem('token')}` } }
-    )
-      .then(response => {
-        setAbouts(response.data);
-      })
-      .catch(error => {
-        console.error('Error fetching About:', error);
-      });
-  }, []);
-
-  useEffect(() => {
-    axios.get(`${process.env.REACT_APP_API_BASE}/api/categories/`)
-      .then(response => {
-        setCategories(response.data);
-      })
-      .catch(error => {
-        console.error('Error fetching categories:', error);
-      });
-  }, []);
-
-  useEffect(() => {
-    axios.get(`${process.env.REACT_APP_API_BASE}/api/customers/admin/`,
-      { headers: { 'Authorization': `Token ${localStorage.getItem('token')}` } }
-    )
-      .then(response => {
-        setCustomers(response.data);
-      })
-      .catch(error => console.error('Error fetching customers:', error));
-  }, []);
-
   const handleCustomersModalOpen = useCallback(() => {
     handleModalOverLayOpen();
     setCustomersModalOpen(true);
@@ -176,25 +125,21 @@ function AdminHomePage() {
         idea={idea}
         ideas={ideas}
         setIdea={setIdea}
-        setIdeas={setIdeas}
         faq={faq}
         faqs={faqs}
         setFaq={setFaq}
-        setFaqs={setFaqs}
         faqModalOpen={faqModalOpen}
         handleFaqModalOpen={handleFaqModalOpen}
         handleResetFaq={handleResetFaq}
         about={about}
         abouts={abouts}
         setAbout={setAbout}
-        setAbouts={setAbouts}
         aboutsModalOpen={aboutModalOpen}
         handleAboutModalOpen={handleAboutModalOpen}
         handleResetAbout={handleResetAbout}
         category={category}
         categories={categories}
         setCategory={setCategory}
-        setCategories={setCategories}
         categoryModalOpen={categoryModalOpen}
         customers={customers}
         handleResetIdea={handleResetIdea}

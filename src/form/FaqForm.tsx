@@ -1,5 +1,6 @@
 import React, { useState, useCallback, useEffect } from 'react';
-import axios from 'axios';
+
+import { useFaqContext } from '@context/FAQContext';
 
 import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
@@ -20,19 +21,17 @@ interface FaqFormProps {
     faq?: FAQ | null;
     handleResetFaq: () => void;
     handleCancel: () => void;
-    setFaqs: (faqs: FAQ[]) => void;
 }
-function FaqForm({ faq, handleResetFaq, handleCancel, setFaqs }: FaqFormProps) {
+function FaqForm({ faq, handleResetFaq, handleCancel }: FaqFormProps) {
+    const { fetchFaqs, updateFaq, createFaq } = useFaqContext();
+
     const [renderEditDelete, setRenderEditDelete] = useState(true);
 
     const [edit, setEdit] = useState(false);
 
     const handleRefresh = useCallback(async () => {
-        const newFaqs = await axios.get(`${process.env.REACT_APP_API_BASE}/api/faq/`, {
-            headers: { 'Authorization': `Token ${localStorage.getItem('token')}` }
-        });
-        setFaqs(newFaqs.data);
-    }, [setFaqs]);
+        fetchFaqs();
+    }, []);
 
     const [newFaq, setNewFaq] = useState<FAQ>({
         id: faq?.id || undefined,
@@ -95,11 +94,7 @@ function FaqForm({ faq, handleResetFaq, handleCancel, setFaqs }: FaqFormProps) {
                     answer: newFaq.answer.toString(),
                     image: newFaq.image,
                 };
-                response = await axios.post(`${process.env.REACT_APP_API_BASE}/api/faq/`, postData, {
-                    headers: {
-                        'Authorization': `Token ${token}`
-                    }
-                });
+                createFaq(postData);
             } else {
                 const putData = {
                     ...newFaq,
@@ -107,19 +102,15 @@ function FaqForm({ faq, handleResetFaq, handleCancel, setFaqs }: FaqFormProps) {
                     answer: newFaq.answer.toString(),
                     image: newFaq.image,
                 };
-                response = await axios.put(`${process.env.REACT_APP_API_BASE}/api/faq/${newFaq.id}/`, putData, {
-                    headers: {
-                        'Authorization': `Token ${token}`
-                    }
-                });
+                updateFaq(newFaq.id, putData);
             }
-
-            setFaqs(response.data);
+            handleCancel();
+            handleRefresh();
             handleResetFaq();
         } catch (error) {
             console.error('Error saving FAQs:', error);
         }
-    }, [newFaq, handleResetFaq, setFaqs]);
+    }, [newFaq, handleResetFaq, handleCancel, handleRefresh]);
 
     return (
         <>

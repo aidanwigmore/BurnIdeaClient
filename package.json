@@ -11,7 +11,8 @@
     "start": "react-app-rewired start",
     "build": "react-app-rewired build",
     "test": "react-app-rewired test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "heroku-postbuild": "npm install --legacy-peer-deps && npm run build"
   },
   "bin": "dist/cli.js",
   "files": [
@@ -31,9 +32,9 @@
   "dependencies": {
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.0",
-    "@mantine/core": "^7.16.0",
+    "@mantine/core": "^7.16.1",
     "@mantine/hooks": "^7.16.0",
-    "@mantine/rte": "5.10.0",
+    "@mantine/rte": "^5.10.5",
     "@mantine/tiptap": "^7.16.0",
     "@mui/icons-material": "^6.3.1",
     "@mui/material": "^6.3.1",

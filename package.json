@@ -2,7 +2,7 @@
   "name": "create-burn-idea-app",
   "version": "0.1.0",
   "engines": {
-    "node": "16.x",
+    "node": "22.0.0",
     "npm": "7.x"
   },
   "description": "Client application for BurnIdea; A place to store and display all your ideas!",
